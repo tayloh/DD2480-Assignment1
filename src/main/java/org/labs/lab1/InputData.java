@@ -124,6 +124,7 @@ public class InputData {
      */
     public int qPts;
 
+    public InputData() {}
 
     /**
      * Used to construct an object holding all input data.
