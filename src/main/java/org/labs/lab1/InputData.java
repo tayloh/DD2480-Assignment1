@@ -5,33 +5,126 @@ package org.labs.lab1;
  */
 public class InputData {
 
+    /**
+     * The number of planar data points.
+     */
     public int numPoints;
+    /**
+     * The x-coordinates of points.
+     */
     public double[] xCoordinates;
+
+    /**
+     * The y-coordinates of points.
+     */
     public double[] yCoordinates;
 
+    /**
+     * The Logical Connector Matrix.
+     */
     public int[][] LCM;
+
+    /**
+     * The Preliminary Unlocking Vector
+     */
     public boolean[] PUV;
 
+    /**
+     * Length in LICs 0 , 7 , 12
+     */
     public double length1;
+
+    /**
+     * Maximum length in LIC 12
+     */
     public double length2;
+
+    /**
+     * Radius in LICs 1, 8, 13
+     */
     public double radius1;
+
+    /**
+     * Maximum radius in LIC 13
+     */
     public double radius2;
+
+    /**
+     * Deviation from PI in LICs 2, 9
+     */
     public double epsilon;
+
+    /**
+     * Area in LICs 3, 10, 14
+     */
     public double area1;
+
+    /**
+     * Maximum area in LIC 14
+     */
     public double area2;
+
+    /**
+     * No. of quadrants in LIC 4
+     */
     public int quads;
+
+    /**
+     * Distance in LIC 6
+     */
     public double dist;
+
+    /**
+     * No. of int. pts. in LICs 8, 13
+     */
     public int aPts;
+
+    /**
+     * No. of int. pts. in LICs 8, 13
+     */
     public int bPts;
+
+    /**
+     * No. of int. pts. in LIC 9
+     */
     public int cPts;
+
+    /**
+     * No. of int. pts. in LIC 9
+     */
     public int dPts;
+
+    /**
+     * No. of int. pts. in LICs 10, 14
+     */
     public int ePts;
+
+    /**
+     * No. of int. pts. in LICs 10, 14
+     */
     public int fPts;
+
+    /**
+     * No. of int. pts. in LIC 11
+     */
     public int gPts;
+
+    /**
+     * No. of int. pts. in LICs 7, 12
+     */
     public int kPts;
+
+    /**
+     * No. of consecutive points in LIC 6
+     */
     public int nPts;
+
+    /**
+     * No. of consecutive points in LIC 4
+     */
     public int qPts;
 
+    public InputData() {}
 
     /**
      * Used to construct an object holding all input data.
