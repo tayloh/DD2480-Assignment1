@@ -26,16 +26,16 @@ public class PUM {
 
 
     /**
-     * Gets the row length of the PUM.
+     * Gets the number of rows in the PUM.
      */
-    public int getRowLength(){
+    public int getNumRows(){
         return this.pum.length;
     }
 
     /**
-     * Gets the column length of the PUM.
+     * Gets the number of columns in the PUM.
      */
-    public int getColumnLength(){
+    public int getNumColumns(){
         return this.pum[0].length;
     }
 

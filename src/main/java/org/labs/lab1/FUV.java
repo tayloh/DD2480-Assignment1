@@ -15,7 +15,7 @@ public class FUV {
      */
     public FUV(PUM pum, boolean[] puv) {
 
-        if (puv.length != LIC.NUM_CONDITIONS || pum.getRowLength() != LIC.NUM_CONDITIONS) {
+        if (puv.length != LIC.NUM_CONDITIONS || pum.getNumRows() != LIC.NUM_CONDITIONS) {
             throw new IllegalArgumentException("PUM and PUV sizes are incompatible with the number of conditions.");
         }
 
@@ -47,11 +47,11 @@ public class FUV {
         Weird specification, but I think it's part of the assignment for it to be ambiguous.
         */
 
-        for (int i = 0; i < pum.getRowLength(); i++) {
+        for (int i = 0; i < pum.getNumRows(); i++) {
 
             boolean rowHasAllTrue = true;
             // Check the elements in the row
-            for (int j = 0; j < pum.getColumnLength(); j++) {
+            for (int j = 0; j < pum.getNumColumns(); j++) {
                 // Following the example nr. 3 in 2.3 FUV
                 if (i == j) continue;
 
