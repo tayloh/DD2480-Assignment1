@@ -161,4 +161,54 @@ public class LICTest {
         assertThrows(Error.class, () -> LIC.condition10(null, null, -1, 1, 0, 0));
         assertThrows(Error.class, () -> LIC.condition10(null, null, 1, -1, 0, 0));
     }
+
+    @Test
+    public void testLIC11_Positive() {
+        int numPoints = 10;
+        int gPts = 1;
+        // on index i = 5 and j = 7 x_j - x_i = 5 - 6 = -1 <= 0
+        var xCoordinates = new double[] { 0, 1, 2, 3, 4, 6, 6, 5, 8, 9 };
+        // y coordinates does not matter
+        var yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        boolean res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
+
+        assertTrue(res);
+
+        // test with bigger gPts
+        gPts = 8;
+        xCoordinates = new double[] { 9, 1, 2, 3, 4, 6, 6, 5, 8, 0 };
+        res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
+        assertTrue(res);
+
+    }
+
+    @Test
+    public void testLIC11_Negative() {
+        int numPoints = 10;
+        int gPts = 1;
+        // on index i = 5 and j = 7 x_j - x_i = 7 - 5 = 2 > 0
+        var xCoordinates = new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        // y coordinates does not matter
+        var yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        boolean res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
+
+        assertFalse(res);
+
+        // test with bigger gPts
+        gPts = 8;
+        xCoordinates = new double[] { 0, 1, 2, 3, 4, 6, 6, 7, 8, 9 };
+        res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
+        assertFalse(res);
+
+        // test with equal x-coordinates
+        xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
+        assertFalse(res);
+    }
+
+    @Test
+    public void testLIC11_Invalid() {
+        // gPts too small
+        assertThrows(Error.class, () -> LIC.condition11(null, null, -1, 0));
+    }
 }
