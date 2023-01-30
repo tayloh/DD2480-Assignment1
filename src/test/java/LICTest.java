@@ -86,4 +86,44 @@ public class LICTest {
 
         assertEquals(true, LIC.condition1(new double[]{-8,-7,-6}, new double[]{3,3,3}, 0.5));
     }
+
+    @Test
+    @DisplayName("Condition 2")
+    void condition2(){
+        // 90 degrees angle
+        double [] x1 = {0, 0, 3};
+        double [] y1 = {9, 0, 0};
+
+        assertEquals(true, LIC.condition2(x1,y1,(2/3)*Math.PI));
+
+        // expected false: 90 degrees is not less than 90 degrees or greater than 270 degrees
+        assertEquals(false, LIC.condition2(x1,y1,Math.PI/2));
+
+        // 180 degrees angle
+        double [] x2 = {-10, 0, 80};
+        double [] y2 = {0, 0, 0};
+
+        // expected false: 180 degrees is not less than or greater than 180 degrees
+        assertEquals(false, LIC.condition2(x2, y2,0));
+        // expected false: 180 degrees is not less than 150 degrees or greater than 210 degrees
+        assertEquals(false, LIC.condition2(x2, y2,Math.PI/6));
+
+        double [] x3 = {-1, 0, -1};
+        double [] y3 = { 0, -4, 0};
+        assertEquals(true, LIC.condition2(x3, y3,(2/3)*Math.PI));
+
+        // expected false: if either the first point or the last point (or both) coincides with the vertex,
+        // the angle is undefined and the LIC is not satisfied by those three points.
+        double [] x4 = {0, 0, -1};
+        double [] y4 = {-4, -4, 0};
+        assertEquals(false, LIC.condition2(x4, y4,Math.PI/3));
+
+        double [] x5 = {6, 0, 0};
+        double [] y5 = {4, -4, -4};
+        assertEquals(false, LIC.condition2(x5, y5,(2/3)*Math.PI));
+
+        double [] x6 = {0, 0, 0};
+        double [] y6 = {4, 4, 4};
+        assertEquals(false, LIC.condition2(x6, y6,Math.PI/3));
+    }
 }

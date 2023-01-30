@@ -175,4 +175,44 @@ public class LIC {
 
         return r;
     }
+
+    /**
+     * Check if condition 2 is met: there exists at least one set of three consecutive data points which
+     * form an angle such that: angle < (PI−EPSILON) or angle > (PI+EPSILON)
+     * The second of the three consecutive points is always the vertex (center) of the angle. The angle is undefined
+     * and the LIC is not satisfied for three points if the first or last (or both) point is coincides with the vertex.
+     *
+     * @param xCoords contains all x coordinates
+     * @param yCoords contains all y coordinates
+     * @param epsilon contains EPSILON from the input-data
+     * @return if condition 2 is met.
+     */
+    public static boolean condition2(double[] xCoords, double[] yCoords, double epsilon) {
+        for(int i = 0 ; i < xCoords.length -2; i++) {
+            if((xCoords[i] == xCoords[i+1] && yCoords[i] == yCoords[i+1])
+            || (xCoords[i+2] == xCoords[i+1] && yCoords[i+2] == yCoords[i+1]) ){
+               continue;
+            }
+
+            double ax = xCoords[i] - xCoords[i+1];
+            double ay = yCoords[i] - yCoords[i+1];
+            double bx = xCoords[i+2] - xCoords[i+1];
+            double by = yCoords[i+2] - yCoords[i+1];
+
+            double va = Math.atan2(ay, ax);
+            double vb = Math.atan2(by, bx);
+            double angle = vb - va;
+
+            //Adding 360 degrees if the angle is negative (gives the same angle)
+            if (angle < 0) {
+                angle += (2*Math.PI);
+            }
+
+            if(angle < Math.PI - epsilon || angle > Math.PI + epsilon){
+                return true;
+            }
+
+        }
+        return false;
+    }
 }
