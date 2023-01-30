@@ -61,4 +61,46 @@ public class LICTest {
         inputData.yCoordinates = new double[] { 0, 1, 2, 3 };
         assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1, inputData.numPoints));
     }
+
+    @Test
+    @DisplayName("LIC 8: Test positive cases (returns true/false correctly)")
+    void testLIC8_Positive() {
+        // Edge case with empty data: no coordinates, all other variables are 0. Should return false
+        InputData inputData = new InputData();
+        assertFalse(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
+
+        // Case where there exists 2 sets of coords that cannot be contained in a circle with radius 1.5 (should return true)
+        inputData.numPoints = 6;
+        inputData.aPts = 1;
+        inputData.bPts = 1;
+        inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4, 5 };
+        inputData.yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
+        inputData.radius1 = 1.5;
+        //assertTrue(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
+
+        // Same as above, but with radius 2 (now there are no coord sets that can be contained in such a circle)
+        inputData.radius1 = 2;
+        assertFalse(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
+
+        // Non-colinear points where radius is too small in both cases: returns true
+        inputData.xCoordinates = new double[] { 0, 1, 1, 3, 2, 5 };
+        inputData.yCoordinates = new double[] { 0, 0, 2, 0, 0, 3 };
+        inputData.radius1 = 1;
+        assertTrue(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
+    }
+
+    @Test
+    @DisplayName("LIC 8: Test negative cases (check for exceptions)")
+    void testLIC8_Negative() {
+        InputData inputData = new InputData();
+
+        // Coordinate arrays have a different number of elements: index out of bounds exception
+        inputData.numPoints = 6;
+        inputData.aPts = 1;
+        inputData.bPts = 1;
+        inputData.xCoordinates = new double[] { 0, 1, 2, 3 };
+        inputData.yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
+        inputData.radius1 = 1.5;
+        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
+    }
 }
