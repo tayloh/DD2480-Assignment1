@@ -17,6 +17,7 @@ public class LIC {
 
     /**
      * Definition of the LIC 7 boolean condition
+     * 
      * @param xCoords
      * @param yCoords
      * @param kPts
@@ -27,8 +28,10 @@ public class LIC {
     public static boolean condition7(double[] xCoords, double[] yCoords, int kPts, double length1, int numPoints) {
         if (numPoints >= 3 && kPts >= 1 && kPts <= numPoints - 2) {
             for (int i = 0; i + kPts + 1 < numPoints; i++) {
-                double dist = Math.sqrt(Math.pow(xCoords[i+kPts+1] - xCoords[i], 2) + Math.pow(yCoords[i+kPts+1] - yCoords[i], 2));
-                if (dist > length1) return true;
+                double dist = Math.sqrt(Math.pow(xCoords[i + kPts + 1] - xCoords[i], 2)
+                        + Math.pow(yCoords[i + kPts + 1] - yCoords[i], 2));
+                if (dist > length1)
+                    return true;
             }
         }
         return false;
@@ -36,6 +39,7 @@ public class LIC {
 
     /**
      * Definition of the LIC 8 boolean condition
+     * 
      * @param xCoords
      * @param yCoords
      * @param aPts
@@ -44,22 +48,28 @@ public class LIC {
      * @param numPoints
      * @return
      */
-    public static boolean condition8(double[] xCoords, double[] yCoords, int aPts, int bPts, double radius1, int numPoints) {
+    public static boolean condition8(double[] xCoords, double[] yCoords, int aPts, int bPts, double radius1,
+            int numPoints) {
         if (numPoints >= 5 && 1 <= aPts && 1 <= bPts && aPts + bPts <= (numPoints - 2)) {
             for (int i = 0; i + aPts + bPts + 2 < numPoints; i++) {
                 int p1 = i;
                 int p2 = i + aPts + 1;
                 int p3 = i + aPts + bPts + 2;
 
-                if (findSmallestCircle(xCoords[p1], yCoords[p1], xCoords[p2], yCoords[p2], xCoords[p3], yCoords[p3]) > radius1) return true;
+                if (findSmallestCircle(xCoords[p1], yCoords[p1], xCoords[p2], yCoords[p2], xCoords[p3],
+                        yCoords[p3]) > radius1)
+                    return true;
             }
         }
         return false;
     }
 
     /**
-     * Function to find the minimal enclosing circle of a triangle (defined by 3 points)
-     * Based on algorithm for the MEC problem from: https://www.cs.mcgill.ca/~cs507/projects/1998/jacob/solutions.html
+     * Function to find the minimal enclosing circle of a triangle (defined by 3
+     * points)
+     * Based on algorithm for the MEC problem from:
+     * https://www.cs.mcgill.ca/~cs507/projects/1998/jacob/solutions.html
+     * 
      * @param x1
      * @param y1
      * @param x2
@@ -77,28 +87,32 @@ public class LIC {
         double dist23 = Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2));
 
         // angles in the triangle made up by the 3 points
-        double p1Angle = Math.acos((Math.pow(dist12, 2) + Math.pow(dist13, 2) - Math.pow(dist23, 2)) / (2 * dist12 * dist13));
-        double p2Angle = Math.acos((Math.pow(dist12, 2) + Math.pow(dist23, 2) - Math.pow(dist13, 2)) / (2 * dist12 * dist23));
-        double p3Angle = Math.acos((Math.pow(dist13, 2) + Math.pow(dist23, 2) - Math.pow(dist12, 2)) / (2 * dist13 * dist23));
+        double p1Angle = Math
+                .acos((Math.pow(dist12, 2) + Math.pow(dist13, 2) - Math.pow(dist23, 2)) / (2 * dist12 * dist13));
+        double p2Angle = Math
+                .acos((Math.pow(dist12, 2) + Math.pow(dist23, 2) - Math.pow(dist13, 2)) / (2 * dist12 * dist23));
+        double p3Angle = Math
+                .acos((Math.pow(dist13, 2) + Math.pow(dist23, 2) - Math.pow(dist12, 2)) / (2 * dist13 * dist23));
 
-        // loop until either current angle is obtuse or we find that all angles are acute
+        // loop until either current angle is obtuse or we find that all angles are
+        // acute
         double currAngle = p3Angle;
         double currSide = dist12;
         double otherAngle1 = p1Angle;
         double otherAngle2 = p2Angle;
-        while(true) {
-            // current angle is obtuse: return circle with its diameter along the side opposite of current angle
+        while (true) {
+            // current angle is obtuse: return circle with its diameter along the side
+            // opposite of current angle
             if (currAngle >= Math.PI / 2) {
                 radius = currSide / 2;
                 break;
-            }
-            else {
+            } else {
                 // all angles are acute: return the unique circumcircle radius
                 if (otherAngle1 < Math.PI / 2 && otherAngle2 < Math.PI / 2) {
-                    radius = (dist12 * dist13 * dist23) / Math.sqrt((dist12+dist13+dist23)*(dist13+dist23-dist12)*(dist23+dist12-dist13)*(dist12+dist13-dist23));
+                    radius = (dist12 * dist13 * dist23) / Math.sqrt((dist12 + dist13 + dist23)
+                            * (dist13 + dist23 - dist12) * (dist23 + dist12 - dist13) * (dist12 + dist13 - dist23));
                     break;
-                }
-                else {
+                } else {
                     // one of the other angles is obtuse: check which one and set it to currAngle
                     // also switch currSide so it is the side opposite to the new currAngle
 
@@ -107,8 +121,7 @@ public class LIC {
                         currAngle = otherAngle1;
                         otherAngle1 = temp;
                         currSide = currAngle == p1Angle ? dist23 : (currAngle == p2Angle ? dist13 : dist12);
-                    }
-                    else {
+                    } else {
                         double temp = currAngle;
                         currAngle = otherAngle2;
                         otherAngle2 = temp;
@@ -145,7 +158,7 @@ public class LIC {
      * @return The three found points
      */
     public static Point2D.Double[] findPointTriplet(double[] xCoordinates, double[] yCoordinates, int offset,
-                                                    int distanceA, int distanceB) {
+            int distanceA, int distanceB) {
 
         int firstIndex = offset;
         int secondIndex = offset + distanceA + 1;
@@ -169,7 +182,7 @@ public class LIC {
      * @return True if the condition is met, False otherwise.
      */
     public static boolean condition9(double[] xCoordinates, double[] yCoordinates, int cPts, int dPts, double epsilon,
-                                     int numPoints) {
+            int numPoints) {
         // check that input is valid
         if (cPts < 1 || dPts < 1) {
             throw new Error("Invalid input provided");
@@ -227,7 +240,7 @@ public class LIC {
      *         otherwise
      */
     public static boolean condition10(double[] xCoordinates, double[] yCoordinates, int ePts, int fPts, double area1,
-                                      int numPoints) {
+            int numPoints) {
         if (ePts < 1 || fPts < 1) {
             throw new Error("Invalid input provided, ePts and fPts must be greater than 0");
         }
@@ -243,5 +256,36 @@ public class LIC {
             }
         }
         return false;
+    }
+
+    public static boolean condition14(double[] xCoordinates, double[] yCoordinates, int ePts, int fPts, double area1,
+            double area2, int numPoints) {
+        if (ePts < 1 || fPts < 1) {
+            throw new Error("Invalid input provided, ePts and fPts must be greater than 0");
+        }
+        if (area1 < 0 || area2 < 0) {
+            throw new Error("Invalid input provided, areas must be greater or equal to 0");
+        }
+
+        if (numPoints < 5) {
+            return false;
+        }
+        int nPossibleTriplets = numPoints - (ePts + fPts + 2);
+        boolean foundGreater = false;
+        boolean foundSmaller = false;
+        for (int i = 0; i < nPossibleTriplets; i++) {
+            var points = findPointTriplet(xCoordinates, yCoordinates, i, ePts, fPts);
+            double area = calculateTriangleArea(points[0], points[1], points[2]);
+            if (area > area1) {
+                foundGreater = true;
+            }
+            if (area < area2) {
+                foundSmaller = true;
+            }
+            if (foundGreater && foundSmaller) {
+                return true;
+            }
+        }
+        return foundGreater && foundSmaller;
     }
 }
