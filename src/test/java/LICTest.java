@@ -256,4 +256,49 @@ public class LICTest {
         assertThrows(Error.class, () -> LIC.condition10(null, null, -1, 1, 0, 0));
         assertThrows(Error.class, () -> LIC.condition10(null, null, 1, -1, 0, 0));
     }
+
+    @Test
+    public void testLIC14_Positive() {
+        int ePts = 1;
+        int fPts = 1;
+        int numPoints = 5;
+        double[] xCoordinates = new double[] { 0, 47, 5, 47, 0 };
+        double[] yCoordinates = new double[] { 0, 47, 5, 47, 5 };
+        // triangle is 5x5, area is 12.5
+        double area1 = 12;
+        double area2 = 13;
+
+        boolean res = LIC.condition14(xCoordinates, yCoordinates, ePts, fPts, area1, area2, numPoints);
+        assertTrue(res);
+    }
+
+    @Test
+    public void testLIC14_Negative() {
+        int ePts = 1;
+        int fPts = 1;
+        int numPoints = 5;
+        double[] xCoordinates = new double[] { 0, 47, 5, 47, 0 };
+        double[] yCoordinates = new double[] { 0, 47, 5, 47, 5 };
+        // triangle is 5x5, area is 12.5
+        double area1 = 13;
+        double area2 = 13;
+        boolean res = LIC.condition14(xCoordinates, yCoordinates, ePts, fPts, area1, area2, numPoints);
+        assertFalse(res);
+        area1 = 12;
+        area2 = 12;
+        res = LIC.condition14(xCoordinates, yCoordinates, ePts, fPts, area1, area2, numPoints);
+        assertFalse(res);
+
+    }
+
+    @Test
+    public void testLIC14_Invalid() {
+        // ePts or fPts too small
+        assertThrows(Error.class, () -> LIC.condition14(null, null, -1, 1, 0, 0, 0));
+        assertThrows(Error.class, () -> LIC.condition14(null, null, 1, -1, 0, 0, 0));
+        // areas too small
+        assertThrows(Error.class, () -> LIC.condition14(null, null, 1, 1, -1, 0, 0));
+        assertThrows(Error.class, () -> LIC.condition14(null, null, 1, 1, 0, -1, 0));
+
+    }
 }
