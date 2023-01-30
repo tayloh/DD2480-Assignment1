@@ -1,8 +1,5 @@
 package org.labs.lab1;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
-
 /**
  * A class for the Conditions Met Vector (CMV).
  */
