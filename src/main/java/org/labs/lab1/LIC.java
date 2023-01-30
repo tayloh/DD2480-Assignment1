@@ -1,8 +1,6 @@
 package org.labs.lab1;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.Random;
 
 /**
  * Utility class containing functions
@@ -18,7 +16,8 @@ public class LIC {
     }
 
     /**
-     * Calculates the angle between three double-precision 2D-points where b is the vertex
+     * Calculates the angle between three double-precision 2D-points where b is the
+     * vertex
      *
      * @param a the first point
      * @param b the second point and vertex
@@ -31,31 +30,34 @@ public class LIC {
 
     /**
      * Checks the condition 9 of the LIC.
-     * Asserts that there is a triplet of points where the angle between them is more than PI + epsilon or less than PI - epsilon.
-     * The points are selected with the requirement to have cPts respective dPts number of points between them.
+     * Asserts that there is a triplet of points where the angle between them is
+     * more than PI + epsilon or less than PI - epsilon.
+     * The points are selected with the requirement to have cPts respective dPts
+     * number of points between them.
      *
      * @param data the InputData provided to the CMV
      * @return True if the condition is met, False otherwise.
      */
-    public static boolean condition9(InputData data) {
+    public static boolean condition9(double[] xCoordinates, double[] yCoordinates, int cPts, int dPts, double epsilon,
+            int numPoints) {
         // check that input is valid
-        if (data.cPts < 1 || data.dPts < 1) {
+        if (cPts < 1 || dPts < 1) {
             throw new Error("Invalid input provided");
         }
         // check that we have enough points to measure
-        if (data.numPoints < 5) {
+        if (numPoints < 5) {
             return false;
         }
-        int nPossibleTriplets = data.numPoints - (data.cPts + data.dPts + 2);
+        int nPossibleTriplets = numPoints - (cPts + dPts + 2);
         for (int i = 0; i < nPossibleTriplets; i++) {
             // extract points
             int firstIndex = i;
-            int secondIndex = i + data.cPts + 1;
-            int thirdIndex = i + data.cPts + data.dPts + 2;
+            int secondIndex = i + cPts + 1;
+            int thirdIndex = i + cPts + dPts + 2;
 
-            var first = new Point2D.Double(data.xCoordinates[firstIndex], data.yCoordinates[firstIndex]);
-            var second = new Point2D.Double(data.xCoordinates[secondIndex], data.yCoordinates[secondIndex]);
-            var third = new Point2D.Double(data.xCoordinates[thirdIndex], data.yCoordinates[thirdIndex]);
+            var first = new Point2D.Double(xCoordinates[firstIndex], yCoordinates[firstIndex]);
+            var second = new Point2D.Double(xCoordinates[secondIndex], yCoordinates[secondIndex]);
+            var third = new Point2D.Double(xCoordinates[thirdIndex], yCoordinates[thirdIndex]);
 
             // if angle is invalid, skip triplet
             if (first.equals(second) || second.equals(third)) {
@@ -63,7 +65,7 @@ public class LIC {
             }
             // check angle requirement
             double angle = calculateAngle(first, second, third);
-            if (angle < (Math.PI - data.epsilon) || angle > (Math.PI + data.epsilon)) {
+            if (angle < (Math.PI - epsilon) || angle > (Math.PI + epsilon)) {
                 return true;
             }
         }

@@ -13,8 +13,6 @@ public class CMV {
     // TODO doc
     public CMV(InputData data) {
         // Computes cmv using LIC static methods
-        this.cmv = new boolean[15];
-        this.cmv[9] = LIC.condition9(data);
     }
 
 
