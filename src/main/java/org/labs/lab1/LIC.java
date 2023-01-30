@@ -82,8 +82,26 @@ public class LIC {
         return false;
     }
 
+    /**
+     * Returns true if there exists at least one set of two consecutive data points
+     * (X[i],Y[i]) and (X[j],Y[j]), such that X[j]-X[i] < 0 (where i = j-1), else false.
+     * @param xCoords points x-coordinates
+     * @param yCoords points y-coordinates
+     */
     public static boolean condition5(double[] xCoords, double yCoords[]) {
-        return true;
+
+        // If there are less than 2 points this can never be true
+        if (xCoords.length != yCoords.length || xCoords.length < 2) {
+            return false;
+        }
+
+        for (int j = 1; j < xCoords.length; j++) {
+            int i = j - 1;
+            if (xCoords[j] - xCoords[i] < 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean condition6(double[] xCoords, double yCoords[]) {

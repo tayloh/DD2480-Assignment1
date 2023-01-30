@@ -77,4 +77,36 @@ public class LICTest {
         );
     }
 
+    // LIC5 has no invalid input to test for.
+    @Test
+    public void testLIC5_Positive() {
+
+        // Should return true since 1 - 5 < 0
+        double[] xCoords = new double[] {1, 1, 5, 1};
+        double[] yCoords = new double[] {0, 1, 1, 0};
+
+        boolean result = LIC.condition5(xCoords, yCoords);
+        assertTrue(result);
+    }
+
+    @Test
+    public void testLIC5_Negative(){
+
+        // Should return false since no consec. points such that
+        // X[j] - X[i] < 0 (j = i-1)
+        double[] xCoords = new double[] {1, 1, 1, 5};
+        double[] yCoords = new double[] {0, 1, 1, 0};
+
+        boolean result = LIC.condition5(xCoords, yCoords);
+        assertFalse(result);
+
+        // Should return false since there are less than 2 points
+        xCoords = new double[] {0};
+        yCoords = new double[] {0};
+
+        result = LIC.condition5(xCoords, yCoords);
+        assertFalse(result);
+    }
+
+
 }
