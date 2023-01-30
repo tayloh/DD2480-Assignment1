@@ -13,6 +13,15 @@ public class LIC {
         return true;
     }
 
+    /**
+     * Definition of the LIC 7 boolean condition
+     * @param xCoords
+     * @param yCoords
+     * @param kPts
+     * @param length1
+     * @param numPoints
+     * @return
+     */
     public static boolean condition7(double[] xCoords, double[] yCoords, int kPts, double length1, int numPoints) {
         if (numPoints >= 3 && kPts >= 1 && kPts <= numPoints - 2) {
             for (int i = 0; i + kPts + 1 < numPoints; i++) {
@@ -23,6 +32,16 @@ public class LIC {
         return false;
     }
 
+    /**
+     * Definition of the LIC 8 boolean condition
+     * @param xCoords
+     * @param yCoords
+     * @param aPts
+     * @param bPts
+     * @param radius1
+     * @param numPoints
+     * @return
+     */
     public static boolean condition8(double[] xCoords, double[] yCoords, int aPts, int bPts, double radius1, int numPoints) {
         if (numPoints >= 5 && 1 <= aPts && 1 <= bPts && aPts + bPts <= (numPoints - 2)) {
             for (int i = 0; i + aPts + bPts + 2 < numPoints; i++) {
