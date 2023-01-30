@@ -206,6 +206,15 @@ public class LIC {
      * separated by kPts points such that the distance between them is less than
      * length2
      * 
+     * @param xCoordinates an array of x-coordinates
+     * @param yCoordinates an array of y-coordinates
+     * @param kPts         the number of points between the two points
+     * @param length1      the distance that the first pair of points should exceed
+     * @param length2      the distance that the second pair of points should be
+     *                     less than
+     * @param numPoints    the total number of points
+     * @return true if the two pairs of points are found, false otherwise
+     * 
      */
     public static boolean condition12(double[] xCoordinates, double[] yCoordinates, int kPts, double length1,
             double length2, int numPoints) {
