@@ -13,4 +13,14 @@ public class LIC {
         return true;
     }
 
+    public static boolean condition7(double[] xCoords, double[] yCoords, int kPts, double length1, int numPoints) {
+        if (numPoints >= 3 && kPts >= 1 && kPts <= numPoints - 2) {
+            for (int i = 0; i + kPts + 1 < numPoints; i++) {
+                double dist = Math.sqrt(Math.pow(xCoords[i+kPts+1] - xCoords[i], 2) + Math.pow(yCoords[i+kPts+1] - yCoords[i], 2));
+                if (dist > length1) return true;
+            }
+        }
+        return false;
+    }
+
 }
