@@ -172,6 +172,19 @@ public class LIC {
      * 
      */
     public static boolean condition11(double[] xCoordinates, double[] yCoordinates, int gPts, int numPoints) {
+        if (gPts < 0) {
+            throw new Error("Invalid input provided, gPts must be greater than 0");
+        }
+        if (numPoints < 3) {
+            return false;
+        }
+        int nPossiblePairs = numPoints - (gPts + 1);
+        for (int i = 0; i < nPossiblePairs; i++) {
+            var points = findPointPair(xCoordinates, yCoordinates, i, gPts);
+            if (points[1].x - points[0].x < 0) {
+                return true;
+            }
+        }
         return false;
     }
 
