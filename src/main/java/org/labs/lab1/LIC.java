@@ -53,6 +53,26 @@ public class LIC {
     }
 
     /**
+     * Finds a point pair from a given respective point distance between them
+     * 
+     * @param xCoordinates an array of x-coordinates
+     * @param yCoordinates an array of y-coordinates
+     * @param offset       the offset from where the first point is checked
+     * @param distance     the distance between the first and the second point
+     * @return The two found points
+     */
+    public static Point2D.Double[] findPointPair(double[] xCoordinates, double[] yCoordinates, int offset,
+            int distance) {
+        int firstIndex = offset;
+        int secondIndex = offset + distance + 1;
+
+        var first = new Point2D.Double(xCoordinates[firstIndex], yCoordinates[firstIndex]);
+        var second = new Point2D.Double(xCoordinates[secondIndex], yCoordinates[secondIndex]);
+
+        return new Point2D.Double[] { first, second };
+    }
+
+    /**
      * Checks the condition 9 of the LIC.
      * Asserts that there is a triplet of points where the angle between them is
      * more than PI + epsilon or less than PI - epsilon.
@@ -136,6 +156,22 @@ public class LIC {
                 return true;
             }
         }
+        return false;
+    }
+
+    /**
+     * Checks the 11th condition of the LIC
+     * Checks if there exists a set of two points (a, b) separated by gPts points
+     * such that bx-ax < 0 and a comes before b in the sequence of points.
+     * 
+     * @param xCoordinates an array of x-coordinates
+     * @param yCoordinates an array of y-coordinates
+     * @param gPts         the number of points between the two points
+     * @param numPoints    the total number of points
+     * @return
+     * 
+     */
+    public static boolean condition11(double[] xCoordinates, double[] yCoordinates, int gPts, int numPoints) {
         return false;
     }
 
