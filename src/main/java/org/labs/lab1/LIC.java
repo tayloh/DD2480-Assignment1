@@ -90,9 +90,52 @@ public class LIC {
         return false;
     }
 
+    /**
+     * Calculates the area of a triangle with the three given points as vertices
+     * 
+     * @param a the first point
+     * @param b the second point
+     * @param c the third point
+     * @return the area of the triangle
+     */
+    public static double calculateTriangleArea(Point2D.Double a, Point2D.Double b, Point2D.Double c) {
+        return Math.abs((a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0);
+    }
+
+    /**
+     * Checks the 10th condition of the LIC
+     * Asserts that there is a triplet of points wich encloses a triangle with an
+     * area that exceeds area1
+     * The points are selected with the requirement to have ePts respective fPts
+     * number of points between them.
+     * 
+     * @param xCoordinates an array of x-coordinates
+     * @param yCoordinates an array of y-coordinates
+     * @param ePts         the number of points between the first and the second
+     *                     selected point
+     * @param fPts         the number of points between the second and third
+     *                     selected point
+     * @param area1        the area that the triangle should exceed
+     * @param numPoints    the total number of points
+     * @return true if the area of the triangle exceeds the area1 param, false
+     *         otherwise
+     */
     public static boolean condition10(double[] xCoordinates, double[] yCoordinates, int ePts, int fPts, double area1,
             int numPoints) {
-
+        if (ePts < 1 || fPts < 1) {
+            throw new Error("Invalid input provided, ePts and fPts must be greater than 0");
+        }
+        if (numPoints < 5) {
+            return false;
+        }
+        int nPossibleTriplets = numPoints - (ePts + fPts + 2);
+        for (int i = 0; i < nPossibleTriplets; i++) {
+            var points = findPointTriplet(xCoordinates, yCoordinates, i, ePts, fPts);
+            double area = calculateTriangleArea(points[0], points[1], points[2]);
+            if (area > area1) {
+                return true;
+            }
+        }
         return false;
     }
 
