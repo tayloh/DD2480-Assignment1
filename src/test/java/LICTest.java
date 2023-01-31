@@ -280,6 +280,7 @@ public class LICTest {
         assertThrows(Error.class, () -> LIC.condition10(null, null, 1, -1, 0, 0));
     }
 
+    @Test
     public void testLIC11_Positive() {
         int numPoints = 10;
         int gPts = 1;
