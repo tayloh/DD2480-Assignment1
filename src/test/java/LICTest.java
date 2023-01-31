@@ -175,18 +175,25 @@ public class LICTest {
     @Test
     @DisplayName("LIC 8: Test negative cases (check for exceptions)")
     void testLIC8_Negative() {
-        InputData inputData = new InputData();
 
-        // Coordinate arrays have a different number of elements: index out of bounds
-        // exception
-        inputData.numPoints = 6;
-        inputData.aPts = 1;
-        inputData.bPts = 1;
-        inputData.xCoordinates = new double[] { 0, 1, 2, 3 };
-        inputData.yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
-        inputData.radius1 = 1.5;
-        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition8(inputData.xCoordinates,
-                inputData.yCoordinates, inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
+    }
+
+    /**
+     * Test case with invalid parameters for LIC 8 where coordinate arrays
+     * have differing amount of elements
+     */
+    @Test
+    @DisplayName("LIC 8 Invalid: Coordinate arrays have differing amount of elements")
+    void testLIC8_Invalid_1() {
+        int numPoints = 6;
+        int aPts = 1;
+        int bPts = 1;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3 };
+        double[] yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
+        double radius1 = 1.5;
+        // Coordinate arrays have a different number of elements: index out of bounds exception
+        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition8(xCoordinates,
+                yCoordinates, aPts, bPts, radius1, numPoints));
     }
 
     @Test
