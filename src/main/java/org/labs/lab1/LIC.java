@@ -234,7 +234,7 @@ public class LIC {
      * @param area1 contains AREA1 from the input-data
      * @return if condition 3 is met
      */
-    public static boolean contidion3(double[] xCoords, double[] yCoords, double area1) throws IllegalArgumentException{
+    public static boolean condition3(double[] xCoords, double[] yCoords, double area1) throws IllegalArgumentException{
         if(area1 < 0){
             throw new IllegalArgumentException("area1 has to be equal to or greater than 0");
         }

@@ -141,7 +141,7 @@ public class LICTest {
         double [] x = {-2, 0, 2};
         double [] y = {4, 8, 4};
 
-        Throwable t = assertThrows( IllegalArgumentException.class, ()-> LIC.contidion3(x, y, -3) );
+        Throwable t = assertThrows( IllegalArgumentException.class, ()-> LIC.condition3(x, y, -3) );
         assertEquals("area1 has to be equal to or greater than 0", t.getMessage());
     }
 
@@ -156,7 +156,7 @@ public class LICTest {
         double [] x = {-2, 0, 2};
         double [] y = {4, 8, 4};
 
-        assertEquals(true, LIC.contidion3(x, y, 7.99));
+        assertEquals(true, LIC.condition3(x, y, 7.99));
     }
      /**
       * Test for condition 3 with an isosceles triangle where the area is 8
@@ -169,7 +169,7 @@ public class LICTest {
         double [] x = {-2, 0, 2};
         double [] y = {4, 8, 4};
 
-        assertEquals(false, LIC.contidion3(x, y, 8));
+        assertEquals(false, LIC.condition3(x, y, 8));
     }
 
     /**
