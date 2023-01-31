@@ -15,19 +15,14 @@ public class LICTest {
     @Test
     @DisplayName("LIC 7: Test positive cases (returns true/false correctly)")
     void testLIC7_Positive() {
-        // Edge case with empty data: no coordinates, all other variables are 0. Should
-        // return false
-        InputData inputData = new InputData();
-        assertFalse(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
 
         // Scenario where two sets of coordinates have dist greater than 4.2: condition
         // met, return true
-        inputData.numPoints = 5;
-        inputData.kPts = 2;
-        inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4 };
-        inputData.yCoordinates = new double[] { 0, 1, 2, 3, 4 };
-        inputData.length1 = 4.2;
+        int numPoints = 5;
+        int kPts = 2;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 4.2;
         assertTrue(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
                 inputData.numPoints));
 
@@ -36,29 +31,65 @@ public class LICTest {
         inputData.kPts = 3;
         assertTrue(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
                 inputData.numPoints));
+    }
 
-        // Case where no set of coordinates with dist > 5 exists (exists with K_PTS = 3)
-        inputData.kPts = 2;
-        inputData.length1 = 5;
-        assertFalse(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
-
-        // Not enough points: condition cannot be met since NUMPOINTS < 3
-        inputData.numPoints = 2;
-        assertFalse(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
-
-        // K_PTS is too large, does not meet the condition 1 <= K_PTS <= NUMPOINTS-2
-        inputData.numPoints = 5;
-        inputData.kPts = 4;
+    /**
+     * Test case for LIC 7 whic returns false since input data is null
+     */
+    @Test
+    @DisplayName("LIC 7 Negative: Edge case with null input")
+    void testLIC7_Negative_1() {
+        // Edge case with empty data: no coordinates, all other variables are 0.
+        // Should return false since no coordinates are checked (the arrays are null)
+        InputData inputData = new InputData();
         assertFalse(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
                 inputData.numPoints));
     }
 
+    /**
+     * Test case for LIC 7 which returns false due to there being no set of
+     * coordinates which meet the condition
+     */
     @Test
-    @DisplayName("LIC 7: Test negative cases (check for exceptions)")
-    void testLIC7_Negative() {
+    @DisplayName("LIC 7 Negative: No coordinate set meeting the condition exists")
+    void testLIC7_Negative_2() {
+        int numPoints = 5;
+        int kPts = 2;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 5;
+        // Case where no set of coordinates with dist > 5 exists (exists with K_PTS = 3)
+        assertFalse(LIC.condition7(xCoordinates, yCoordinates, kPts, length1, numPoints));
+    }
 
+    /**
+     * Test case for LIC 7 which returns false due to NUMPOINTS being too small
+     */
+    @Test
+    @DisplayName("LIC 7 Negative: NUMPOINTS too small to meet condition")
+    void testLIC7_Negative_3() {
+        int numPoints = 2;
+        int kPts = 2;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 4.2;
+        // Not enough points: condition cannot be met since NUMPOINTS < 3
+        assertFalse(LIC.condition7(xCoordinates, yCoordinates, kPts, length1, numPoints));
+    }
+
+    /**
+     * Test case for LIC 7 which returns false due to K_PTS being too large
+     */
+    @Test
+    @DisplayName("LIC 7 Negative: K_PTS too large to meet condition")
+    void testLIC7_Negative_4() {
+        int numPoints = 5;
+        int kPts = 4;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 4.2;
+        // K_PTS is too large, does not meet the condition 1 <= K_PTS <= NUMPOINTS-2
+        assertFalse(LIC.condition7(xCoordinates, yCoordinates, kPts, length1, numPoints));
     }
 
     /**
