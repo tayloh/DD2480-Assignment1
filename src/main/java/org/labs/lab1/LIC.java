@@ -663,7 +663,7 @@ public class LIC {
             throw  new IllegalArgumentException("quads not within correct range");
         }
 
-        for (int i = 0; i < numPoints - qPts; i++) {
+        for (int i = 0; i <= numPoints - qPts; i++) {
             // For each point, check if the next three points
             // lie in at least quads+1 different quadrants.
             // At most, they can lie on 4 different quadrants,

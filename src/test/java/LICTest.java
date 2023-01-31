@@ -193,6 +193,28 @@ public class LICTest {
     }
 
     /**
+     * Asserts true
+     * Should return true since the points are
+     * distributed among three distinct quadrants
+     * and we check for > 2.
+     *
+     * Only detects true if it checks all points
+     * (added as part of bugfix; it did not check the last point)
+     */
+    @Test
+    public void testLIC4_Positive_2() {
+        // Quadrant nrs: 1, 1, 3, 1, 2
+        double[] xCoords = new double[]{0, 0,  0, 1, -1};
+        double[] yCoords = new double[]{0, 0, -1, 0,  0};
+        int qPts = 5;
+        int quads = 2;
+        int numPoints = xCoords.length;
+        boolean result = LIC.condition4(xCoords, yCoords, qPts, quads, numPoints);
+
+        assertTrue(result);
+    }
+
+    /**
      * Asserts false
      * Should return false since all points lite in the same quadrants
      * and this test checks for > 1 quadrants
