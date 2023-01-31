@@ -333,121 +333,212 @@ public class LICTest {
                 () -> LIC.condition6(null, null, 4, -1, 5));
     }
 
+    /**
+     * Test case for LIC 7 which returns true since two coordinate sets meet the condition
+     */
     @Test
-    @DisplayName("LIC 7: Test positive cases (returns true/false correctly)")
-    void testLIC7_Positive() {
-        // Edge case with empty data: no coordinates, all other variables are 0. Should
-        // return false
-        InputData inputData = new InputData();
-        assertFalse(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
-
+    @DisplayName("LIC 7 Positive: Two coordinate sets meet the condition")
+    void testLIC7_Positive_1() {
         // Scenario where two sets of coordinates have dist greater than 4.2: condition
         // met, return true
-        inputData.numPoints = 5;
-        inputData.kPts = 2;
-        inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4 };
-        inputData.yCoordinates = new double[] { 0, 1, 2, 3, 4 };
-        inputData.length1 = 4.2;
-        assertTrue(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
+        int numPoints = 5;
+        int kPts = 2;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 4.2;
+        assertTrue(LIC.condition7(xCoordinates, yCoordinates, kPts, length1, numPoints));
+    }
 
-        // Increase K_PTS by 1: there still exists a set of coordinates which meets
-        // condition from above; (0,0) and (4,4)
-        inputData.kPts = 3;
-        assertTrue(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
+    /**
+     * Test case for LIC 7 which returns true since one coordinate set meet the condition
+     */
+    @Test
+    @DisplayName("LIC 7 Positive: One coordinate set meets the condition")
+    void testLIC7_Positive_2() {
+        // Increase K_PTS by 1 from above test case: there still exists a
+        // set of coordinates which meet condition from above; (0,0) and (4,4)
+        int numPoints = 5;
+        int kPts = 3;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 4.2;
+        assertTrue(LIC.condition7(xCoordinates, yCoordinates, kPts, length1, numPoints));
+    }
 
+    /**
+     * Test case for LIC 7 which returns false since input data is null
+     */
+    @Test
+    @DisplayName("LIC 7 Negative: Edge case with null input")
+    void testLIC7_Negative_1() {
+        // Edge case with empty data: no coordinates, all other variables are 0.
+        // Should return false since no coordinates are checked (the arrays are null)
+        InputData inputData = new InputData();
+        assertFalse(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
+                inputData.numPoints));
+    }
+
+    /**
+     * Test case for LIC 7 which returns false due to there being no set of
+     * coordinates which meet the condition
+     */
+    @Test
+    @DisplayName("LIC 7 Negative: No coordinate set meeting the condition exists")
+    void testLIC7_Negative_2() {
+        int numPoints = 5;
+        int kPts = 2;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 5;
         // Case where no set of coordinates with dist > 5 exists (exists with K_PTS = 3)
-        inputData.kPts = 2;
-        inputData.length1 = 5;
-        assertFalse(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
+        assertFalse(LIC.condition7(xCoordinates, yCoordinates, kPts, length1, numPoints));
+    }
 
+    /**
+     * Test case for LIC 7 which returns false due to NUMPOINTS being too small
+     */
+    @Test
+    @DisplayName("LIC 7 Negative: NUMPOINTS too small to meet condition")
+    void testLIC7_Negative_3() {
+        int numPoints = 2;
+        int kPts = 2;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 4.2;
         // Not enough points: condition cannot be met since NUMPOINTS < 3
-        inputData.numPoints = 2;
-        assertFalse(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
+        assertFalse(LIC.condition7(xCoordinates, yCoordinates, kPts, length1, numPoints));
+    }
 
+    /**
+     * Test case for LIC 7 which returns false due to K_PTS being too large
+     */
+    @Test
+    @DisplayName("LIC 7 Negative: K_PTS too large to meet condition")
+    void testLIC7_Negative_4() {
+        int numPoints = 5;
+        int kPts = 4;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 4.2;
         // K_PTS is too large, does not meet the condition 1 <= K_PTS <= NUMPOINTS-2
-        inputData.numPoints = 5;
-        inputData.kPts = 4;
-        assertFalse(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
+        assertFalse(LIC.condition7(xCoordinates, yCoordinates, kPts, length1, numPoints));
     }
 
+    /**
+     * Test case with invalid parameters for LIC 7 where NUMPOINTS is greater
+     * than the number of coordinates
+     */
     @Test
-    @DisplayName("LIC 7: Test negative cases (check for exceptions)")
-    void testLIC7_Negative() {
-        InputData inputData = new InputData();
-
-        // NUMPOINTS is greater than the actual number of coordinates: index out of
-        // bounds exception
-        inputData.numPoints = 10;
-        inputData.kPts = 3;
-        inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4 };
-        inputData.yCoordinates = new double[] { 0, 1, 2, 3, 4 };
-        inputData.length1 = 6;
-        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(inputData.xCoordinates,
-                inputData.yCoordinates, inputData.kPts, inputData.length1, inputData.numPoints));
-
-        // Coordinate arrays have a different number of elements: index out of bounds
-        // exception
-        inputData.numPoints = 5;
-        inputData.yCoordinates = new double[] { 0, 1, 2, 3 };
-        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(inputData.xCoordinates,
-                inputData.yCoordinates, inputData.kPts, inputData.length1, inputData.numPoints));
+    @DisplayName("LIC 7 Invalid: NUMPOINTS greater than number of coordinates")
+    void testLIC7_Invalid_1() {
+        int numPoints = 10;
+        int kPts = 3;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double[] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 6;
+        // NUMPOINTS is greater than the actual number of coordinates
+        // we expect the condition to throw an index out of bounds error
+        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(xCoordinates,
+                yCoordinates, kPts, length1, numPoints));
     }
 
+    /**
+     * Test case with invalid parameters for LIC 7 where coordinate arrays
+     * have differing amount of elements
+     */
     @Test
-    @DisplayName("LIC 8: Test positive cases (returns true/false correctly)")
-    void testLIC8_Positive() {
-        // Edge case with empty data: no coordinates, all other variables are 0. Should
-        // return false
-        InputData inputData = new InputData();
-        assertFalse(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts,
-                inputData.radius1, inputData.numPoints));
+    @DisplayName("LIC 7 Invalid: Coordinate arrays have differing amount of elements")
+    void testLIC7_Invalid_2() {
+        int kPts = 3;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double[] yCoordinates = new double[] { 0, 1, 2, 3 };
+        double length1 = 6;
+        int numPoints = 5;
+        // Coordinate arrays have a different number of elements: index out of bounds exception
+        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(xCoordinates,
+                yCoordinates, kPts, length1, numPoints));
+    }
 
+    /**
+     * Test for LIC 8 which returns true for a set of colinear points where the radius is too
+     * small to contain any of them
+     */
+    @Test
+    @DisplayName("LIC 8 Positive: Colinear points that cannot be contained")
+    void testLIC8_Positive_1() {
         // Case where there exists 2 sets of coords that cannot be contained in a circle
         // with radius 1.5 (should return true)
-        inputData.numPoints = 6;
-        inputData.aPts = 1;
-        inputData.bPts = 1;
-        inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4, 5 };
-        inputData.yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
-        inputData.radius1 = 1.5;
-        // assertTrue(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates,
-        // inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
-
-        // Same as above, but with radius 2 (now there are no coord sets that can be
-        // contained in such a circle)
-        inputData.radius1 = 2;
-        assertFalse(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts,
-                inputData.radius1, inputData.numPoints));
-
-        // Non-colinear points where radius is too small in both cases: returns true
-        inputData.xCoordinates = new double[] { 0, 1, 1, 3, 2, 5 };
-        inputData.yCoordinates = new double[] { 0, 0, 2, 0, 0, 3 };
-        inputData.radius1 = 1;
-        assertTrue(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts,
-                inputData.radius1, inputData.numPoints));
+        int numPoints = 6;
+        int aPts = 1;
+        int bPts = 1;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4, 5 };
+        double[] yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
+        double radius1 = 1.5;
+        assertTrue(LIC.condition8(xCoordinates, yCoordinates, aPts, bPts, radius1, numPoints));
     }
 
+    /**
+     * Test for LIC 8 which returns true for a set of non-colinear points that cannot be contained
+     * in any given circle
+     */
     @Test
-    @DisplayName("LIC 8: Test negative cases (check for exceptions)")
-    void testLIC8_Negative() {
-        InputData inputData = new InputData();
+    @DisplayName("LIC 8 Positive: Non-colinear points that cannot be contained")
+    void testLIC8_Positive_2() {
+        // Non-colinear points where radius is too small in both cases: returns true
+        int numPoints = 6;
+        int aPts = 1;
+        int bPts = 1;
+        double[] xCoordinates = new double[] { 0, 1, 1, 3, 2, 5 };
+        double[] yCoordinates = new double[] { 0, 0, 2, 0, 0, 3 };
+        double radius1 = 1;
+        assertTrue(LIC.condition8(xCoordinates, yCoordinates, aPts, bPts, radius1, numPoints));
+    }
 
-        // Coordinate arrays have a different number of elements: index out of bounds
-        // exception
-        inputData.numPoints = 6;
-        inputData.aPts = 1;
-        inputData.bPts = 1;
-        inputData.xCoordinates = new double[] { 0, 1, 2, 3 };
-        inputData.yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
-        inputData.radius1 = 1.5;
-        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition8(inputData.xCoordinates,
-                inputData.yCoordinates, inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
+    /**
+     * Test case for LIC 8 which returns false since input is null
+     */
+    @Test
+    @DisplayName("LIC 8 Negative: Edge case with null input")
+    void testLIC8_Negative_1() {
+        // Edge case with empty data: no coordinates, all other variables are 0.
+        // Should return false since no coordinates are checked (the arrays are null)
+        InputData inputData = new InputData();
+        assertFalse(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts, inputData.radius1,
+                inputData.numPoints));
+    }
+
+    /**
+     * Test case for LIC 8 which returns false since all coordinate sets can be contained in some circle
+     */
+    @Test
+    @DisplayName("LIC 8 Negative: All set of coordinates can be contained in a circle with given radius")
+    void testLIC8_Negative_2() {
+        int numPoints = 6;
+        int aPts = 1;
+        int bPts = 1;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4, 5 };
+        double[] yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
+        double radius1 = 2;
+        // With radius 2, now there are no coord sets can be contained in such a circle
+        assertFalse(LIC.condition8(xCoordinates, yCoordinates, aPts, bPts, radius1, numPoints));
+    }
+
+    /**
+     * Test case with invalid parameters for LIC 8 where coordinate arrays
+     * have differing amount of elements
+     */
+    @Test
+    @DisplayName("LIC 8 Invalid: Coordinate arrays have differing amount of elements")
+    void testLIC8_Invalid_1() {
+        int numPoints = 6;
+        int aPts = 1;
+        int bPts = 1;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3 };
+        double[] yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
+        double radius1 = 1.5;
+        // Coordinate arrays have a different number of elements: index out of bounds exception
+        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition8(xCoordinates,
+                yCoordinates, aPts, bPts, radius1, numPoints));
     }
 
     @Test
