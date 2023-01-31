@@ -141,12 +141,6 @@ public class LICTest {
     @Test
     @DisplayName("LIC 8: Test positive cases (returns true/false correctly)")
     void testLIC8_Positive() {
-        // Edge case with empty data: no coordinates, all other variables are 0. Should
-        // return false
-        InputData inputData = new InputData();
-        assertFalse(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts,
-                inputData.radius1, inputData.numPoints));
-
         // Case where there exists 2 sets of coords that cannot be contained in a circle
         // with radius 1.5 (should return true)
         inputData.numPoints = 6;
@@ -155,7 +149,7 @@ public class LICTest {
         inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4, 5 };
         inputData.yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
         inputData.radius1 = 1.5;
-        // assertTrue(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates,
+        /assertTrue(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates,
         // inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
 
         // Same as above, but with radius 2 (now there are no coord sets that can be
@@ -172,10 +166,33 @@ public class LICTest {
                 inputData.radius1, inputData.numPoints));
     }
 
+    /**
+     * Test case for LIC 8 which returns false since input is null
+     */
     @Test
-    @DisplayName("LIC 8: Test negative cases (check for exceptions)")
-    void testLIC8_Negative() {
+    @DisplayName("LIC 8 Negative: Edge case with null input")
+    void testLIC8_Negative_1() {
+        // Edge case with empty data: no coordinates, all other variables are 0.
+        // Should return false since no coordinates are checked (the arrays are null)
+        InputData inputData = new InputData();
+        assertFalse(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
+                inputData.numPoints));
+    }
 
+    /**
+     * Test case for LIC 8 which returns false since all coordinate sets can be contained in some circle
+     */
+    @Test
+    @DisplayName("LIC 8 Negative: All set of coordinates can be contained in a circle with given radius")
+    void testLIC8_Negative_2() {
+        int numPoints = 6;
+        int aPts = 1;
+        int bPts = 1;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4, 5 };
+        double[] yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
+        double radius1 = 2;
+        // With radius 2, now there are no coord sets can be contained in such a circle
+        assertFalse(LIC.condition8(xCoordinates, yCoordinates, aPts, bPts, radius1, numPoints));
     }
 
     /**
