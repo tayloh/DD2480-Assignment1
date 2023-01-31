@@ -816,4 +816,64 @@ public class LIC {
         return false;
     }
 
+    /**
+     * Check if condition 13 is met: Two requirements are needed for condition 13.
+     *
+     * a) if there are at least one set of three data points that cannot be contained
+     * within or on a circle1 with radius RADIUS1.
+     * b) if there are at least one set of three data points that can be contained
+     * within or on a circle2 with radius RADIUS2.
+     *
+     * @param aPts the number of points between the first point and the second point
+     * @param bPts the number of points between the second point and the third point
+     * @param radius1 the radius of circle1
+     * @param radius2 the radius of circle2
+     * @param numPoints the total number of points
+     * @return if condition 13 is met
+     */
+    public static boolean condition13(double [] xCoords, double [] yCoords, int aPts, int bPts, double radius1, double radius2, double numPoints){
+        if(radius1 < 0){
+            throw new Error("Invalid input provided, radius1 must be greater than 0");
+        }
+        if(radius2 < 0){
+            throw new Error("Invalid input provided, radius2 must be greater than 0");
+        }
+        if(aPts < 1){
+            throw new Error("Invalid input provided, aPts must be greater than 1");
+        }
+        if(bPts < 1){
+            throw new Error("Invalid input provided, bPts must be greater than 1");
+        }
+
+        if (numPoints < 5){
+            return false;
+        }
+        // Requirement a) if there is three data points that cannot be contained within or
+        // on a circle of radius RADIUS1 (r > Radius1)
+        boolean reqA = false;
+        // Requirement b) if there is three data points that can be contained within or
+        // on a circle of radius RADIUS2 (r <= Radius2)
+        boolean reqB = false;
+
+        for(int i = 0; i + aPts + bPts + 2 < numPoints; i ++){
+            int p1 = i;
+            int p2 = i + aPts + 1;
+            int p3 = p2 + bPts + 1;
+
+            double r = findSmallestCircle(xCoords[p1], yCoords[p1], xCoords[p2], yCoords[p2], xCoords[p3], yCoords[p3]);
+
+            if (r > radius1){
+                reqA = true;
+            }
+            if (r <= radius2){
+                reqB = true;
+            }
+
+            // End the loop if both requirements are already true
+            if(reqA && reqB){
+                return true;
+            }
+        }
+        return reqA && reqB;
+    }
 }
