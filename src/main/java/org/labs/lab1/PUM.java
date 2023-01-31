@@ -10,10 +10,9 @@ public class PUM {
     /**
      * Constructs a PUM object from a custom
      * PUM matrix, used for testing purposes.
-     * @param lcm Logical Connector Matrix (LCM)
      * @param customPum A custom PUM for testing
      */
-    public PUM(int[][] lcm, boolean[][] customPum){
+    public PUM(boolean[][] customPum){
         this.pum = customPum;
     }
 
