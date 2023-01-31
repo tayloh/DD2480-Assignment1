@@ -12,10 +12,12 @@ public class LICTest {
     // Proposed naming convention:
     // testLIC0_TypeOfData[Positive/Negative/Invalid]() { ... }
 
+    /**
+     * Test case for LIC 7 which returns true since two coordinate sets meet the condition
+     */
     @Test
-    @DisplayName("LIC 7: Test positive cases (returns true/false correctly)")
-    void testLIC7_Positive() {
-
+    @DisplayName("LIC 7 Positive: Two coordinate sets meet the condition")
+    void testLIC7_Positive_1() {
         // Scenario where two sets of coordinates have dist greater than 4.2: condition
         // met, return true
         int numPoints = 5;
@@ -23,18 +25,27 @@ public class LICTest {
         double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
         double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
         double length1 = 4.2;
-        assertTrue(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
-
-        // Increase K_PTS by 1: there still exists a set of coordinates which meets
-        // condition from above; (0,0) and (4,4)
-        inputData.kPts = 3;
-        assertTrue(LIC.condition7(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
-                inputData.numPoints));
+        assertTrue(LIC.condition7(xCoordinates, yCoordinates, kPts, length1, numPoints));
     }
 
     /**
-     * Test case for LIC 7 whic returns false since input data is null
+     * Test case for LIC 7 which returns true since one coordinate set meet the condition
+     */
+    @Test
+    @DisplayName("LIC 7 Positive: One coordinate set meets the condition")
+    void testLIC7_Positive_2() {
+        // Increase K_PTS by 1 from above test case: there still exists a
+        // set of coordinates which meet condition from above; (0,0) and (4,4)
+        int numPoints = 5;
+        int kPts = 3;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double [] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 4.2;
+        assertTrue(LIC.condition7(xCoordinates, yCoordinates, kPts, length1, numPoints));
+    }
+
+    /**
+     * Test case for LIC 7 which returns false since input data is null
      */
     @Test
     @DisplayName("LIC 7 Negative: Edge case with null input")
