@@ -129,6 +129,7 @@ public class LICTest {
                 inputData.yCoordinates, inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
     }
 
+    @Test
     public void testCalculateAngle_Positive() {
 
         var a = new Point2D.Double(2, 0);
