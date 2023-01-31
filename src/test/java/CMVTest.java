@@ -21,16 +21,18 @@ public class CMVTest {
 
     /**
      * Assert false
-     * Construct input data for which LIC 10 is false, check if cmv.get(10) matches this
+     * Construct input data for which LIC 10 is false (there is one coord set with triangle area 5, but
+     * area1 is set to 6). Checks if cmv.get(10) matches this
+     *
      */
     @Test
     @DisplayName("CMV Negative: Input data with condition 10 false")
     public void testCMV_Negative_1() {
         InputData inputData = new InputData(new double[] { 0, 1, 3, 4, 5 }, new double[] { 0, 0, 2, 0, 0 },
-                new String[][]{}, new boolean[]{}, 1, 1, 1, 1, 1, 2,
+                new String[][]{}, new boolean[]{}, 1, 1, 1, 1, 1, 6,
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 2);
         CMV cmv = new CMV(inputData);
-        assertTrue(cmv.get(10));
+        assertFalse(cmv.get(10));
     }
 
     /**
