@@ -12,6 +12,14 @@ public class CMV {
         // Computes cmv using LIC static methods
     }
 
+    /**
+     * Constructs a CMV object from a custom boolean vector. Used in testing
+     * @param customCmv the custom CMV
+     */
+    public CMV(boolean[] customCmv) {
+        this.cmv = customCmv;
+    }
+
 
     /**
      * Gets the i:th element of the CMV.
