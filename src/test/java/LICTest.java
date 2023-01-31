@@ -333,6 +333,7 @@ public class LICTest {
                 () -> LIC.condition6(null, null, 4, -1, 5));
     }
 
+    @Test
     @DisplayName("LIC 7: Test positive cases (returns true/false correctly)")
     void testLIC7_Positive() {
         // Edge case with empty data: no coordinates, all other variables are 0. Should
