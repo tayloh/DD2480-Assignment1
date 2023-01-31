@@ -23,8 +23,10 @@ public class LaunchInterceptor {
         // If any condition in the final unlocking vector
         // is false, we don't launch.
         for (int i = 0; i < fuv.getLength(); i++) {
-            if (!fuv.get(i)) return false;
-            System.out.println("NO");
+            if (!fuv.get(i)) {
+                System.out.println("NO");
+                return false;
+            }
         }
         System.out.println("YES");
         return true;
