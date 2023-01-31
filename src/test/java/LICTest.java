@@ -68,17 +68,15 @@ public class LICTest {
     @Test
     @DisplayName("LIC 7 Invalid: NUMPOINTS greater than number of coordinates")
     void testLIC7_Invalid_1() {
-        InputData inputData = new InputData();
-
-        inputData.numPoints = 10;
-        inputData.kPts = 3;
-        inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4 };
-        inputData.yCoordinates = new double[] { 0, 1, 2, 3, 4 };
-        inputData.length1 = 6;
+        int numPoints = 10;
+        int kPts = 3;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double[] yCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double length1 = 6;
         // NUMPOINTS is greater than the actual number of coordinates
         // we expect the condition to throw an index out of bounds error
-        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(inputData.xCoordinates,
-                inputData.yCoordinates, inputData.kPts, inputData.length1, inputData.numPoints));
+        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(xCoordinates,
+                yCoordinates, kPts, length1, numPoints));
     }
 
     /**
@@ -88,16 +86,14 @@ public class LICTest {
     @Test
     @DisplayName("LIC 7 Invalid: Coordinate arrays have differing amount of elements")
     void testLIC7_Invalid_2() {
-        InputData inputData = new InputData();
-
-        inputData.kPts = 3;
-        inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4 };
-        inputData.yCoordinates = new double[] { 0, 1, 2, 3 };
-        inputData.length1 = 6;
-        inputData.numPoints = 5;
+        int kPts = 3;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4 };
+        double[] yCoordinates = new double[] { 0, 1, 2, 3 };
+        double length1 = 6;
+        int numPoints = 5;
         // Coordinate arrays have a different number of elements: index out of bounds exception
-        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(inputData.xCoordinates,
-                inputData.yCoordinates, inputData.kPts, inputData.length1, inputData.numPoints));
+        assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(xCoordinates,
+                yCoordinates, kPts, length1, numPoints));
     }
 
     @Test
