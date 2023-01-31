@@ -8,6 +8,13 @@ import java.awt.geom.Point2D;
  */
 public class LIC {
 
+
+    /**
+     * The number of launch interceptor conditions.
+     * Defines the sizes of PUV, FUV, etc...
+     */
+    public static int NUM_CONDITIONS = 15;
+
     // Feel free to add helper functions
 
     /**
