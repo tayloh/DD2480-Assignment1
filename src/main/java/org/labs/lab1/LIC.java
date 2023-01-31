@@ -215,4 +215,29 @@ public class LIC {
         }
         return false;
     }
+
+    /**
+     * Check if condition 3 is met: there exists at least one set of three data points of which
+     * builds a triangle with an area greater than AREA1
+     *
+     * @param xCoords contains all x coordinates
+     * @param yCoords contains all y coordinates
+     * @param area1 contains AREA1 from the input-data
+     * @return if condition 3 is met
+     */
+    public static boolean contidion3(double[] xCoords, double[] yCoords, double area1) throws IllegalArgumentException{
+        if(area1 < 0){
+            throw new IllegalArgumentException("area1 has to be equal to or greater than 0");
+        }
+        for(int i = 0 ; i < xCoords.length -2; i++){
+            double triangleArea = Math.abs(0.5*(xCoords[i] * (yCoords[i+1] - yCoords[i+2]) + xCoords[i+1] * (yCoords[i+2] - yCoords[i]) + xCoords[i+2] * (yCoords[i] - yCoords[i+1])));
+
+            if(triangleArea > area1){
+                return true;
+            }
+
+        }
+        return false;
+    }
+
 }

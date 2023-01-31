@@ -1,5 +1,6 @@
 package test.java;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.labs.lab1.LIC;
@@ -125,5 +126,46 @@ public class LICTest {
         double [] x6 = {0, 0, 0};
         double [] y6 = {4, 4, 4};
         assertEquals(false, LIC.condition2(x6, y6,Math.PI/3));
+    }
+
+    /**
+     * Test for invalid data of AREA1 being less than 0
+     */
+    @Test
+    @DisplayName("Condition 3 invalid data")
+    void condition3_invalid_data(){
+
+        double [] x = {-2, 0, 2};
+        double [] y = {4, 8, 4};
+
+        Throwable t = assertThrows( IllegalArgumentException.class, ()-> LIC.contidion3(x, y, -3) );
+        Assertions.assertEquals("area1 has to be equal to or greater than 0", t.getMessage());
+    }
+
+    /**
+     * Test for condition 3 with an isosceles triangle where the area is 8
+     * and AREA1 being 7.99, which should give a positive result
+     */
+    @Test
+    @DisplayName("Condition 3 positive isosceles triangle")
+    void condition3_positive_isosceles_triangle(){
+        // triangle with area being 8
+        double [] x = {-2, 0, 2};
+        double [] y = {4, 8, 4};
+
+        assertEquals(true, LIC.contidion3(x, y, 7.99));
+    }
+     /**
+      * Test for condition 3 with an isosceles triangle where the area is 8
+      * and AREA1 being 8, which should give a negative result
+     */
+    @Test
+    @DisplayName("Condition 3 negative isosceles triangle")
+    void condition3_negative_isosceles_triangle(){
+        // triangle with area being 8
+        double [] x = {-2, 0, 2};
+        double [] y = {4, 8, 4};
+
+        assertEquals(false, LIC.contidion3(x, y, 8));
     }
 }
