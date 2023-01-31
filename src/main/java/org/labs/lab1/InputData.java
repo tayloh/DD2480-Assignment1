@@ -22,7 +22,7 @@ public class InputData {
     /**
      * The Logical Connector Matrix.
      */
-    public int[][] LCM;
+    public String[][] LCM;
 
     /**
      * The Preliminary Unlocking Vector
@@ -129,7 +129,7 @@ public class InputData {
     /**
      * Used to construct an object holding all input data.
      */
-    public InputData(double[] xCoordinates, double[] yCoordinates, int[][] LCM, boolean[] PUV,
+    public InputData(double[] xCoordinates, double[] yCoordinates, String[][] LCM, boolean[] PUV,
                      double length1, double length2, double radius1, double radius2, double epsilon,
                      double area1, double area2, int quads, double dist, int aPts, int bPts, int cPts,
                      int dPts, int ePts, int fPts, int gPts, int kPts, int nPts, int qPts) {
