@@ -172,8 +172,13 @@ public class LICTest {
         assertEquals(false, LIC.contidion3(x, y, 8));
     }
 
+    /**
+     * Asserts true
+     * Should return true since there exists a consecutive sequence of five points
+     * that visits all four quadrants
+     */
     @Test
-    public void testLIC4_Positive() {
+    public void testLIC4_Positive_1() {
         // Should be true since there is a consecutive sequence of points
         // that visit the following quadrants in this order:
         //  ... quadrant 1, quadrant 4, quadrant 2, quadrant 3 ...
@@ -187,8 +192,13 @@ public class LICTest {
         assertTrue(result);
     }
 
+    /**
+     * Asserts false
+     * Should return false since all points lite in the same quadrants
+     * and this test checks for > 1 quadrants
+     */
     @Test
-    public void  testLIC4_Negative() {
+    public void  testLIC4_Negative_1() {
         // Should be false since all points lie in the same quadrant
         // and we request it should be > 1
 
@@ -200,40 +210,74 @@ public class LICTest {
 
         boolean result = LIC.condition4(xCoords, yCoords, qPts, quads, numPoints);
         assertFalse(result);
+    }
 
+    /**
+     * Asserts false
+     * Should return false since qPts < quad + 1
+     * (we can never visit quad + 1 quadrants with
+     * using qPts consecutive points)
+     */
+    @Test
+    public void  testLIC4_Negative_2() {
         // Should be false since qPts is less than quad+1
         // (we can never visit quad+1 distinct quadrants consecutively using only qPts points then)
-        xCoords = new double[]{0,   0,  1, -1,  0, -1.0};
-        yCoords = new double[]{0.1, 0, -1,  0, -1, -0.5};
-        qPts = 3;
-        quads = 3;
-        numPoints = xCoords.length;
-        result = LIC.condition4(xCoords, yCoords, qPts, quads, numPoints);
+        double[] xCoords = new double[]{0, 0, 1, -1, 0, -1.0};
+        double[] yCoords = new double[]{0.1, 0, -1, 0, -1, -0.5};
+        int qPts = 3;
+        int quads = 3;
+        int numPoints = xCoords.length;
+        boolean result = LIC.condition4(xCoords, yCoords, qPts, quads, numPoints);
 
         assertFalse(result);
     }
 
+    /**
+     * Asserts throw
+     * Should throw since qPts < 2
+     */
     @Test
-    public void testLIC4_Invalid() {
+    public void testLIC4_Invalid_1() {
         // Invalid since qPts=1 is less than 2
         assertThrows(
                 IllegalArgumentException.class,
                 () -> LIC.condition4(null, null, 1, 3, 10)
         );
+    }
 
+    /**
+     * Asserts throw
+     * Should throw since qPts > numPoints
+     */
+    @Test
+    public void testLIC4_Invalid_2() {
         // Invalid since qPts=11 is more than numPoints=10
         // This could be implemented to return false instead I guess
         assertThrows(
                 IllegalArgumentException.class,
                 () -> LIC.condition4(null, null, 11, 3, 10)
         );
+    }
 
+    /**
+     * Asserts throw
+     * Should throw since quads < 1
+     */
+    @Test
+    public void testLIC4_Invalid_3() {
         // Invalid since quads=0 is less than 1
         assertThrows(
                 IllegalArgumentException.class,
                 () -> LIC.condition4(null, null, 5, 0, 10)
         );
+    }
 
+    /**
+     * Asserts throw
+     * Should throw since quads > 3
+     */
+    @Test
+    public void testLIC4_Invalid_4() {
         // Invalid since quads=4 is larger than 3
         assertThrows(
                 IllegalArgumentException.class,
@@ -241,9 +285,16 @@ public class LICTest {
         );
     }
 
-    // LIC5 has no invalid input to test for.
+
+    // OBS: LIC5 has no invalid input to test for.
+
+    /**
+     * Asserts true
+     * Should return true since there exists consecutive
+     * points such that x[i+1] - x[i] < 0
+     */
     @Test
-    public void testLIC5_Positive() {
+    public void testLIC5_Positive_1() {
 
         // Should return true since 1 - 5 < 0
         double[] xCoords = new double[] {1, 1, 5, 1};
@@ -253,8 +304,13 @@ public class LICTest {
         assertTrue(result);
     }
 
+    /**
+     * Asserts false
+     * Should return false since there exist no consecutive points
+     * such that x[i+1]-x[i] < 0
+     */
     @Test
-    public void testLIC5_Negative(){
+    public void testLIC5_Negative_1(){
 
         // Should return false since no consec. points such that
         // X[j] - X[i] < 0 (j = i-1)
@@ -263,17 +319,29 @@ public class LICTest {
 
         boolean result = LIC.condition5(xCoords, yCoords);
         assertFalse(result);
+    }
 
+    /**
+     * Asserts false
+     * Should return false since there are less than 2 points
+     */
+    @Test
+    public void testLIC5_Negative_2(){
         // Should return false since there are less than 2 points
-        xCoords = new double[] {0};
-        yCoords = new double[] {0};
+        double[] xCoords = new double[]{0};
+        double[] yCoords = new double[]{0};
 
-        result = LIC.condition5(xCoords, yCoords);
+        boolean result = LIC.condition5(xCoords, yCoords);
         assertFalse(result);
     }
 
+    /**
+     * Asserts true
+     * Should return true since of the points are further away than dist from
+     * the line between (0, 1) and (0, 0)
+     */
     @Test
-    public void testLIC6_Positive() {
+    public void testLIC6_Positive_1() {
 
         // Should return true since one of the points are far away from the
         // line between (0, 1) and (0, 0)
@@ -286,21 +354,34 @@ public class LICTest {
 
         boolean result = LIC.condition6(xCoords, yCoords, nPts, dist, numPoints);
         assertTrue(result);
+    }
+
+    /**
+     * Asserts true
+     * Should return true since first and last points coincide and one consecutive
+     * point in between is further away than dist from that coinciding point
+     */
+    @Test
+    public void testLIC6_Positive_2() {
 
         // Should return true since first and last coincides and one point is further
         // away than dist from that coinciding point
-        xCoords = new double[] {1, 10, 0, 1, 1};
-        yCoords = new double[] {1, 10, 0, 1, 1};
-        nPts = 4;
-        dist = 1;
-        numPoints = 5;
+        double[] xCoords = new double[]{1, 10, 0, 1, 1};
+        double[] yCoords = new double[]{1, 10, 0, 1, 1};
+        int nPts = 4;
+        int dist = 1;
+        int numPoints = 5;
 
-        result = LIC.condition6(xCoords, yCoords, nPts, dist, numPoints);
+        boolean result = LIC.condition6(xCoords, yCoords, nPts, dist, numPoints);
         assertTrue(result);
     }
 
+    /**
+     * Asserts false
+     * Should return false since all points lie on the same line
+     */
     @Test
-    public void testLIC6_Negative() {
+    public void testLIC6_Negative_1() {
         // Should return false since all points lie on a line
         double[] xCoords = new double[] {1, 2, 3, 4, 5};
         double[] yCoords = new double[] {1, 2, 3, 4, 5};
@@ -311,23 +392,54 @@ public class LICTest {
 
         boolean result = LIC.condition6(xCoords, yCoords, nPts, dist, numPoints);
         assertFalse(result);
+    }
+
+    /**
+     * Asserts false
+     * Should return false since numPoints < 3
+     */
+    @Test
+    public void testLIC6_Negative_2() {
+        double[] xCoords = new double[] {1, 10, 1, 1, 5};
+        double[] yCoords = new double[] {1, 10, 1, 1, 5};
+
+        int nPts = 4;
+        int dist = 1;
 
         // Should return false since numPoints < 3
-        numPoints = 2;
-        result = LIC.condition6(xCoords, yCoords, nPts, dist, numPoints);
+        int numPoints = 2;
+        boolean result = LIC.condition6(xCoords, yCoords, nPts, dist, numPoints);
         assertFalse(result);
     }
 
+    /**
+     * Asserts throw
+     * Should throw since nPts < 3
+     */
     @Test
-    public void testLIC6_Invalid() {
+    public void testLIC6_Invalid_1() {
         // Should throw since nPts < 3
         assertThrows(IllegalArgumentException.class,
                 () -> LIC.condition6(null, null, 2, 1, 5));
+    }
 
+    /**
+     * Asserts throw
+     * Should throw since nPts > numPoints
+     */
+    @Test
+    public void testLIC6_Invalid_2() {
         // Should throw since nPts > numPoints
         assertThrows(IllegalArgumentException.class,
                 () -> LIC.condition6(null, null, 6, 1, 5));
+    }
 
+    /**
+     * Asserts throw
+     * Should throw since dist < 0
+     */
+    @Test
+    public void testLIC6_Invalid_3() {
         // Should throw since dist < 0
         assertThrows(IllegalArgumentException.class,
                 () -> LIC.condition6(null, null, 4, -1, 5));
