@@ -182,7 +182,7 @@ public class LICTest {
         // Edge case with empty data: no coordinates, all other variables are 0.
         // Should return false since no coordinates are checked (the arrays are null)
         InputData inputData = new InputData();
-        assertFalse(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.kPts, inputData.length1,
+        assertFalse(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts, inputData.radius1,
                 inputData.numPoints));
     }
 
