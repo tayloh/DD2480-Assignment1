@@ -322,8 +322,8 @@ public class LICTest {
         res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
         assertFalse(res);
 
-        // test that pairs where j >= i does not count
-        xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1 };
+        // test that pairs where j >= i does not count, i.e. that order matters
+        xCoordinates = new double[] { 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6 };
         res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
         assertFalse(res);
 
