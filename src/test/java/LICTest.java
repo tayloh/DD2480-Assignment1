@@ -108,5 +108,66 @@ public class LICTest {
         assertFalse(result);
     }
 
+    @Test
+    public void testLIC6_Positive() {
+
+        // Should return true since one of the points are far away from the
+        // line between (0, 1) and (0, 0)
+        double[] xCoords = new double[] {1, 10, 1, 0, 1};
+        double[] yCoords = new double[] {0, 10, 1, 0, 1};
+
+        int nPts = 4;
+        int dist = 1;
+        int numPoints = 5;
+
+        boolean result = LIC.condition6(xCoords, yCoords, nPts, dist, numPoints);
+        assertTrue(result);
+
+        // Should return true since first and last coincides and one point is further
+        // away than dist from that coinciding point
+        xCoords = new double[] {1, 10, 0, 1, 1};
+        yCoords = new double[] {1, 10, 0, 1, 1};
+        nPts = 4;
+        dist = 1;
+        numPoints = 5;
+
+        result = LIC.condition6(xCoords, yCoords, nPts, dist, numPoints);
+        assertTrue(result);
+    }
+
+    @Test
+    public void testLIC6_Negative() {
+        // Should return false since all points lie on a line
+        double[] xCoords = new double[] {1, 2, 3, 4, 5};
+        double[] yCoords = new double[] {1, 2, 3, 4, 5};
+
+        int nPts = 4;
+        int dist = 1;
+        int numPoints = 5;
+
+        boolean result = LIC.condition6(xCoords, yCoords, nPts, dist, numPoints);
+        assertFalse(result);
+
+        // Should return false since numPoints < 3
+        numPoints = 2;
+        result = LIC.condition6(xCoords, yCoords, nPts, dist, numPoints);
+        assertFalse(result);
+    }
+
+    @Test
+    public void testLIC6_Invalid() {
+        // Should throw since nPts < 3
+        assertThrows(IllegalArgumentException.class,
+                () -> LIC.condition6(null, null, 2, 1, 5));
+
+        // Should throw since nPts > numPoints
+        assertThrows(IllegalArgumentException.class,
+                () -> LIC.condition6(null, null, 6, 1, 5));
+
+        // Should throw since dist < 0
+        assertThrows(IllegalArgumentException.class,
+                () -> LIC.condition6(null, null, 4, -1, 5));
+    }
+
 
 }
