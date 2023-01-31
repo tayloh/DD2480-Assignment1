@@ -11,6 +11,10 @@ public class LaunchInterceptor {
      */
     public static boolean DECIDE(InputData data) {
 
+        if (data.numPoints < 2 || data.numPoints > 100) {
+            throw new IllegalArgumentException("numPoints must be between 2 and 100");
+        }
+
         // Note that none of these are implemented.
         CMV cmv = new CMV(data);
         PUM pum = new PUM(data.LCM, cmv);
