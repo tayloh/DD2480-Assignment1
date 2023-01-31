@@ -965,4 +965,49 @@ public class LICTest {
         assertThrows(Error.class, () -> LIC.condition14(null, null, 1, 1, 0, -1, 0));
     }
 
+    @Test
+    @DisplayName("LIC 13: Test invalid radius1")
+    void testLIC13_Invalid_Radius1() {
+        Throwable t = assertThrows(Error.class, () -> LIC.condition13(null, null, 1, 1, -1, 0, 0));
+        assertEquals("Invalid input provided, radius1 must be greater than 0", t.getMessage());
+    }
+    @Test
+    @DisplayName("LIC 13: Test invalid radius2")
+    void testLIC13_Invalid_Radius2() {
+        Throwable t = assertThrows(Error.class, () -> LIC.condition13(null, null, 1, 1, 0, -1, 0));
+        assertEquals("Invalid input provided, radius2 must be greater than 0", t.getMessage());
+    }
+    @Test
+    @DisplayName("LIC 13: Test invalid aPts")
+    void testLIC13_Invalid_APts() {
+        Throwable t = assertThrows(Error.class, () -> LIC.condition13(null, null, 0, 1, 0, 0, 0));
+        assertEquals("Invalid input provided, aPts must be greater than 1", t.getMessage());
+    }
+    @Test
+    @DisplayName("LIC 13: Test invalid bPts")
+    void testLIC13_Invalid_BPts() {
+        Throwable t = assertThrows(Error.class, () -> LIC.condition13(null, null, 1, 0, 0, 0, 0));
+        assertEquals("Invalid input provided, bPts must be greater than 1", t.getMessage());
+    }
+    @Test
+    @DisplayName("LIC 13: Test positive")
+    void testLIC13_Positive() {
+        // the data points on index 0, 2, 5 has a radius of 0.7071
+        double [] x = {0, 0, 0, 0, 0, 1};
+        double [] y = {0, 0, 1, 0, 0, 0};
+        int aPts =1;
+        int bPts =2;
+        assertTrue(LIC.condition13(x, y, aPts, bPts, 0.5, 1, 6));
+    }
+    @Test
+    @DisplayName("LIC 13: Test negative")
+    void testLIC13_Negative() {
+        // the data points on index 0, 2, 5 has a radius of 0.7071
+        double [] x = {0, 0, 0, 0, 0, 1};
+        double [] y = {0, 0, 1, 0, 0, 0};
+        int aPts =1;
+        int bPts =2;
+        assertFalse(LIC.condition13(x, y, aPts, bPts, 0.5, 0.7, 6));
+    }
+
 }
