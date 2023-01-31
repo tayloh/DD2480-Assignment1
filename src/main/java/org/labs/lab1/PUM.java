@@ -7,6 +7,16 @@ public class PUM {
 
     private boolean[][] pum;
 
+    /**
+     * Constructs a PUM object from a custom
+     * PUM matrix, used for testing purposes.
+     * @param lcm Logical Connector Matrix (LCM)
+     * @param customPum A custom PUM for testing
+     */
+    public PUM(int[][] lcm, boolean[][] customPum){
+        this.pum = customPum;
+    }
+
     // TODO doc
     public PUM(int[][] lcm, CMV cmv){
         // Calculates the PUM using provided LCM and provided precalculated CMV
@@ -19,9 +29,7 @@ public class PUM {
      * @param j column index
      */
     public boolean get(int i, int j) {
-        // Checks if within bounds for i, j
-        // Gets the pum value on position [i][j]
-        return true;
+        return this.pum[i][j];
     }
 
 
