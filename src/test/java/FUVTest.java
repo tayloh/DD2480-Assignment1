@@ -1,6 +1,7 @@
 import org.labs.lab1.*;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FUVTest {
@@ -14,27 +15,27 @@ public class FUVTest {
     @Test
     public void testFUV_Positive_1() {
         boolean[][] customPumMatrix = {
-            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
+                {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
         };
 
         PUM pum = new PUM(customPumMatrix);
 
         FUV fuv = new FUV(pum,
-                new boolean[] {true, true, true, true, true,
+                new boolean[]{true, true, true, true, true,
                         true, true, true, true, true,
                         true, true, true, true, true});
 
@@ -48,30 +49,30 @@ public class FUVTest {
      * the PUV excludes the second condition.
      */
     @Test
-    public void testFUV_Positive_2(){
+    public void testFUV_Positive_2() {
         boolean[][] customPumMatrix = {
                 {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
         };
 
         PUM pum = new PUM(customPumMatrix);
 
         // Second element of PUV is false (don't consider that condition)
         FUV fuv = new FUV(pum,
-                new boolean[] {true, false, true, true, true,
+                new boolean[]{true, false, true, true, true,
                         true, true, true, true, true,
                         true, true, true, true, true});
 
@@ -86,29 +87,29 @@ public class FUVTest {
      * contains at least one false element in the first row.
      */
     @Test
-    public void testFUV_Negative_1(){
+    public void testFUV_Negative_1() {
         boolean[][] customPumMatrix = {
                 {true, true, true, true, true, false, true, true, true, true, true, true, true, true, true},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
         };
 
         PUM pum = new PUM(customPumMatrix);
 
         FUV fuv = new FUV(pum,
-                new boolean[] {true, true, true, true, true,
+                new boolean[]{true, true, true, true, true,
                         true, true, true, true, true,
                         true, true, true, true, true});
 
@@ -125,25 +126,25 @@ public class FUVTest {
     public void testFUV_Invalid_1() {
         boolean[][] customPumMatrix = {
                 {true, true, true, true, true, false, true, true, true, true, true, true, true, true, true},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
         };
 
         final PUM pum = new PUM(customPumMatrix);
 
-        final boolean[] puv = new boolean[] {false, true};
+        final boolean[] puv = new boolean[]{false, true};
 
         assertThrows(IllegalArgumentException.class, () -> new FUV(pum, puv));
 
@@ -158,19 +159,19 @@ public class FUVTest {
     public void testFUV_Invalid_2() {
         boolean[][] customPumMatrix = {
                 {true, true, true, true, true, false, true, true, true, true, true, true, true, true, true},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false},
-                {true, false, false, true, false, true, false, false, true, false, true, false, false , true, false}
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false},
+                {true, false, false, true, false, true, false, false, true, false, true, false, false, true, false}
         };
 
         final PUM pum = new PUM(customPumMatrix);
 
-        final boolean[] puv = new boolean[] {false, true};
+        final boolean[] puv = new boolean[]{false, true};
 
         assertThrows(IllegalArgumentException.class, () -> new FUV(pum, puv));
 

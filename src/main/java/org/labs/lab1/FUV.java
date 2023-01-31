@@ -10,6 +10,7 @@ public class FUV {
 
     /**
      * Constructs the Final Unlocking Vector (FUV).
+     *
      * @param pum Preliminary Unlocking Matrix (PUM)
      * @param puv Preliminary Unlocking Vector (PUV)
      */
@@ -67,8 +68,7 @@ public class FUV {
             // considered when signaling the interceptor launch
             if (!puv[i] || rowHasAllTrue) {
                 this.fuv[i] = true;
-            }
-            else {
+            } else {
                 // This is default, but to be explicit...
                 this.fuv[i] = false;
             }

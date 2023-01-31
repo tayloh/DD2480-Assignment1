@@ -10,20 +10,22 @@ public class PUM {
     /**
      * Constructs a PUM object from a custom
      * PUM matrix, used for testing purposes.
+     *
      * @param customPum A custom PUM for testing
      */
-    public PUM(boolean[][] customPum){
+    public PUM(boolean[][] customPum) {
         this.pum = customPum;
     }
 
     // TODO doc
-    public PUM(int[][] lcm, CMV cmv){
+    public PUM(int[][] lcm, CMV cmv) {
         // Calculates the PUM using provided LCM and provided precalculated CMV
     }
 
 
     /**
      * Gets the PUM value on index i,j.
+     *
      * @param i row index
      * @param j column index
      */
@@ -35,14 +37,14 @@ public class PUM {
     /**
      * Gets the number of rows in the PUM.
      */
-    public int getNumRows(){
+    public int getNumRows() {
         return this.pum.length;
     }
 
     /**
      * Gets the number of columns in the PUM.
      */
-    public int getNumColumns(){
+    public int getNumColumns() {
         return this.pum[0].length;
     }
 
