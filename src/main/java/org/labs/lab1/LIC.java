@@ -293,4 +293,59 @@ public class LIC {
         return false;
     }
 
+    /**
+     * Calculates the distance between two points
+     * 
+     * @param a the first point
+     * @param b the second point
+     * @return the distance between the two points
+     */
+    public static double calculateDistance(Point2D.Double a, Point2D.Double b) {
+        return Math.hypot(b.x - a.x, b.y - a.y);
+    }
+
+    /**
+     * Checks the 12th condition of the LIC
+     * Checks that there is two points (a, b) separated by kPts points such that
+     * the distance between them is greater than length1 and two points (c, d)
+     * separated by kPts points such that the distance between them is less than
+     * length2
+     * 
+     * @param xCoordinates an array of x-coordinates
+     * @param yCoordinates an array of y-coordinates
+     * @param kPts         the number of points between the two points
+     * @param length1      the distance that the first pair of points should exceed
+     * @param length2      the distance that the second pair of points should be
+     *                     less than
+     * @param numPoints    the total number of points
+     * @return true if the two pairs of points are found, false otherwise
+     * 
+     */
+    public static boolean condition12(double[] xCoordinates, double[] yCoordinates, int kPts, double length1,
+            double length2, int numPoints) {
+        if (kPts < 0 || length1 < 0 || length2 < 0) {
+            throw new Error("Invalid input provided, kPts and lengths must be greater than 0");
+        }
+        if (numPoints < 3) {
+            return false;
+        }
+        boolean foundGreater = false;
+        boolean foundLesser = false;
+        int nPossiblePairs = numPoints - (kPts + 1);
+        for (int i = 0; i < nPossiblePairs; i++) {
+            var points = findPointPair(xCoordinates, yCoordinates, i, kPts);
+            double distance = calculateDistance(points[0], points[1]);
+            if (distance > length1) {
+                foundGreater = true;
+            }
+            if (distance < length2) {
+                foundLesser = true;
+            }
+            if (foundGreater && foundLesser) {
+                break;
+            }
+        }
+        return foundGreater && foundLesser;
+    }
+
 }

@@ -335,4 +335,68 @@ public class LICTest {
         // gPts too small
         assertThrows(Error.class, () -> LIC.condition11(null, null, -1, 0));
     }
+
+    @Test
+    public void testLIC12_Positive() {
+        int kPts = 1;
+        double length1 = 0.9;
+        double length2 = 1;
+        int numPoints = 10;
+
+        double[] xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        double[] yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 };
+
+        boolean res = LIC.condition12(xCoordinates, yCoordinates, kPts, length1, length2, numPoints);
+        assertTrue(res);
+
+        // test with bigger kPts
+        kPts = 7;
+        length1 = 5;
+        xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 10 };
+        yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 10 };
+        res = LIC.condition12(xCoordinates, yCoordinates, kPts, length1, length2, numPoints);
+        assertTrue(res);
+
+        // only one pair (each) that satisfies the conditions
+        kPts = 3;
+        length1 = 100;
+        length2 = 1.1;
+        xCoordinates = new double[] { 2, 4, 6, 8, 10, 9, 14, 16, 18, 120 };
+        yCoordinates = new double[] { 2, 4, 6, 8, 10, 8, 14, 16, 18, 120 };
+
+    }
+
+    @Test
+    public void testLIC12_Negative() {
+        int kPts = 1;
+        double length1 = 1;
+        double length2 = 1;
+        int numPoints = 10;
+
+        // all distances 0
+        double[] xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        double[] yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+
+        boolean res = LIC.condition12(xCoordinates, yCoordinates, kPts, length1, length2, numPoints);
+        assertFalse(res);
+
+        // test with bigger kPts
+        kPts = 7;
+        length1 = 100;
+        xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 10 };
+        yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 10 };
+        res = LIC.condition12(xCoordinates, yCoordinates, kPts, length1, length2, numPoints);
+        assertFalse(res);
+    }
+
+    @Test
+    public void testLIC12_Invalid() {
+        // kPts too small
+        assertThrows(Error.class, () -> LIC.condition12(null, null, -1, 1, 1, 0));
+        // length1 too small
+        assertThrows(Error.class, () -> LIC.condition12(null, null, 1, -1, 1, 0));
+        // length2 too small
+        assertThrows(Error.class, () -> LIC.condition12(null, null, 1, 1, -1, 0));
+    }
+
 }
