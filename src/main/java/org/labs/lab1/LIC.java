@@ -159,6 +159,26 @@ public class LIC {
     }
 
     /**
+     * Finds a point pair from a given respective point distance between them
+     * 
+     * @param xCoordinates an array of x-coordinates
+     * @param yCoordinates an array of y-coordinates
+     * @param offset       the offset from where the first point is checked
+     * @param distance     the distance between the first and the second point
+     * @return The two found points
+     */
+    public static Point2D.Double[] findPointPair(double[] xCoordinates, double[] yCoordinates, int offset,
+            int distance) {
+        int firstIndex = offset;
+        int secondIndex = offset + distance + 1;
+
+        var first = new Point2D.Double(xCoordinates[firstIndex], yCoordinates[firstIndex]);
+        var second = new Point2D.Double(xCoordinates[secondIndex], yCoordinates[secondIndex]);
+
+        return new Point2D.Double[] { first, second };
+    }
+
+    /**
      * Checks the condition 9 of the LIC.
      * Asserts that there is a triplet of points where the angle between them is
      * more than PI + epsilon or less than PI - epsilon.
@@ -226,8 +246,7 @@ public class LIC {
      * @return true if the area of the triangle exceeds the area1 param, false
      *         otherwise
      */
-    public static boolean condition10(double[] xCoordinates, double[] yCoordinates, int ePts, int fPts, double area1,
-                                      int numPoints) {
+    public static boolean condition10(double[] xCoordinates, double[] yCoordinates, int ePts, int fPts, double area1, int numPoints) {
         if (ePts < 1 || fPts < 1) {
             throw new Error("Invalid input provided, ePts and fPts must be greater than 0");
         }
@@ -244,4 +263,34 @@ public class LIC {
         }
         return false;
     }
+
+    /**
+     * Checks the 11th condition of the LIC
+     * Checks if there exists a set of two points (a, b) separated by gPts points
+     * such that bx-ax < 0 and a comes before b in the sequence of points.
+     * 
+     * @param xCoordinates an array of x-coordinates
+     * @param yCoordinates an array of y-coordinates
+     * @param gPts         the number of points between the two points
+     * @param numPoints    the total number of points
+     * @return
+     * 
+     */
+    public static boolean condition11(double[] xCoordinates, double[] yCoordinates, int gPts, int numPoints) {
+        if (gPts < 0) {
+            throw new Error("Invalid input provided, gPts must be greater than 0");
+        }
+        if (numPoints < 3) {
+            return false;
+        }
+        int nPossiblePairs = numPoints - (gPts + 1);
+        for (int i = 0; i < nPossiblePairs; i++) {
+            var points = findPointPair(xCoordinates, yCoordinates, i, gPts);
+            if (points[1].x - points[0].x < 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
