@@ -138,32 +138,39 @@ public class LICTest {
                 yCoordinates, kPts, length1, numPoints));
     }
 
+    /**
+     * Test for LIC 8 which returns true for a set of colinear points where the radius is too
+     * small to contain any of them
+     */
     @Test
-    @DisplayName("LIC 8: Test positive cases (returns true/false correctly)")
-    void testLIC8_Positive() {
+    @DisplayName("LIC 8 Positive: Colinear points that cannot be contained")
+    void testLIC8_Positive_1() {
         // Case where there exists 2 sets of coords that cannot be contained in a circle
         // with radius 1.5 (should return true)
-        inputData.numPoints = 6;
-        inputData.aPts = 1;
-        inputData.bPts = 1;
-        inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4, 5 };
-        inputData.yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
-        inputData.radius1 = 1.5;
-        /assertTrue(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates,
-        // inputData.aPts, inputData.bPts, inputData.radius1, inputData.numPoints));
+        int numPoints = 6;
+        int aPts = 1;
+        int bPts = 1;
+        double[] xCoordinates = new double[] { 0, 1, 2, 3, 4, 5 };
+        double[] yCoordinates = new double[] { 0, 0, 0, 0, 0, 0 };
+        double radius1 = 1.5;
+        assertTrue(LIC.condition8(xCoordinates, yCoordinates, aPts, bPts, radius1, numPoints));
+    }
 
-        // Same as above, but with radius 2 (now there are no coord sets that can be
-        // contained in such a circle)
-        inputData.radius1 = 2;
-        assertFalse(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts,
-                inputData.radius1, inputData.numPoints));
-
+    /**
+     * Test for LIC 8 which returns true for a set of non-colinear points that cannot be contained
+     * in any given circle
+     */
+    @Test
+    @DisplayName("LIC 8 Positive: Non-colinear points that cannot be contained")
+    void testLIC8_Positive_2() {
         // Non-colinear points where radius is too small in both cases: returns true
-        inputData.xCoordinates = new double[] { 0, 1, 1, 3, 2, 5 };
-        inputData.yCoordinates = new double[] { 0, 0, 2, 0, 0, 3 };
-        inputData.radius1 = 1;
-        assertTrue(LIC.condition8(inputData.xCoordinates, inputData.yCoordinates, inputData.aPts, inputData.bPts,
-                inputData.radius1, inputData.numPoints));
+        int numPoints = 6;
+        int aPts = 1;
+        int bPts = 1;
+        double[] xCoordinates = new double[] { 0, 1, 1, 3, 2, 5 };
+        double[] yCoordinates = new double[] { 0, 0, 2, 0, 0, 3 };
+        double radius1 = 1;
+        assertTrue(LIC.condition8(xCoordinates, yCoordinates, aPts, bPts, radius1, numPoints));
     }
 
     /**
