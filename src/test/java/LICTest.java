@@ -58,22 +58,44 @@ public class LICTest {
     @Test
     @DisplayName("LIC 7: Test negative cases (check for exceptions)")
     void testLIC7_Negative() {
+
+    }
+
+    /**
+     * Test case with invalid parameters for LIC 7 where NUMPOINTS is greater
+     * than the number of coordinates
+     */
+    @Test
+    @DisplayName("LIC 7 Invalid: NUMPOINTS greater than number of coordinates")
+    void testLIC7_Invalid_1() {
         InputData inputData = new InputData();
 
-        // NUMPOINTS is greater than the actual number of coordinates: index out of
-        // bounds exception
         inputData.numPoints = 10;
         inputData.kPts = 3;
         inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4 };
         inputData.yCoordinates = new double[] { 0, 1, 2, 3, 4 };
         inputData.length1 = 6;
+        // NUMPOINTS is greater than the actual number of coordinates
+        // we expect the condition to throw an index out of bounds error
         assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(inputData.xCoordinates,
                 inputData.yCoordinates, inputData.kPts, inputData.length1, inputData.numPoints));
+    }
 
-        // Coordinate arrays have a different number of elements: index out of bounds
-        // exception
-        inputData.numPoints = 5;
+    /**
+     * Test case with invalid parameters for LIC 7 where coordinate arrays
+     * have differing amount of elements
+     */
+    @Test
+    @DisplayName("LIC 7 Invalid: Coordinate arrays have differing amount of elements")
+    void testLIC7_Invalid_2() {
+        InputData inputData = new InputData();
+
+        inputData.kPts = 3;
+        inputData.xCoordinates = new double[] { 0, 1, 2, 3, 4 };
         inputData.yCoordinates = new double[] { 0, 1, 2, 3 };
+        inputData.length1 = 6;
+        inputData.numPoints = 5;
+        // Coordinate arrays have a different number of elements: index out of bounds exception
         assertThrows(IndexOutOfBoundsException.class, () -> LIC.condition7(inputData.xCoordinates,
                 inputData.yCoordinates, inputData.kPts, inputData.length1, inputData.numPoints));
     }
