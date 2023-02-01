@@ -248,7 +248,8 @@ public class LICTest {
     }
 
     /**
-     * Test for invalid data of AREA1 being less than 0
+     * Asserts throw
+     * Should throw error because of invalid data of AREA1 being less than 0
      */
     @Test
     @DisplayName("LIC 3 Invalid: invalid area1 value")
@@ -262,8 +263,9 @@ public class LICTest {
     }
 
     /**
-     * Test for condition 3 with an isosceles triangle where the area is 8
-     * and AREA1 being 7.99, which should give a positive result
+     * Asserts true
+     * Should return true since there exists one set, an isosceles triangle,
+     * with an area of 8 that will not fit in a circle of area AREA1 (7.99)
      */
     @Test
     @DisplayName("LIC 3 positive 1: isosceles triangle")
@@ -276,8 +278,9 @@ public class LICTest {
     }
 
      /**
-      * Test for condition 3 with an isosceles triangle where the area is 8
-      * and AREA1 being 8, which should give a negative result
+      * Asserts false
+      * Should return false since there does not exist one set,that will not fit in a circle of area AREA1
+      * the isosceles triangle with area 8 fits in a circle area of 8
      */
     @Test
     @DisplayName("LIC 3 positive 1: negative isosceles triangle")
