@@ -57,18 +57,23 @@ We conclude that we are now in the "In Place" state, where if we just iron out s
 ## Individual Contributions
 
 Amanda: 
-- LICs 0-3 and 13
+- LIC 0-3 + unit tests
+- LIC 13 + unit tests
+- Code reviews
 
 Erik: 
-- Structure 
-- LIC 4-6
-- FUV class (TODO)
+- Structure (repo structure, class structure, class skeleton structures)
+- LICs 4-6 + unit tests
+- FUV class + unit tests
+- LaunchInterceptor class + unit tests (main tests)
+- Code reviews
 
 Tobias: 
-- LIC 7-8
-- CMV (TODO)
+- LIC 7-8 + unit tests
+- CMV class + unit tests
+- Code reviews
 
 Hannes: 
-- LIC 9-12 and 14
-- PUM 
-- Unit tests for the above
+- LIC 9-12 and 14 + unit tests
+- PUM class + unit tests
+- Code reviews
