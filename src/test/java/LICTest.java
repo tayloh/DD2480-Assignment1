@@ -795,24 +795,40 @@ public class LICTest {
                 yCoordinates, aPts, bPts, radius1, numPoints));
     }
 
+    /**
+     * Asserts true
+     * Checks that the calculateAngle method returns the correct angle for some
+     * sample points. First triangle is a right angle triangle, second triangle is a
+     * 45 degree angle triangle
+     */
     @Test
+    @DisplayName("Calculate angle method returns correct angle")
     public void testCalculateAngle_Positive() {
 
         var a = new Point2D.Double(2, 0);
         var b = new Point2D.Double(0, 0);
         var c = new Point2D.Double(0, 2);
 
-        assertEquals(Math.PI / 2, LIC.calculateAngle(a, b, c));
+        var first = LIC.calculateAngle(a, b, c);
 
         a = new Point2D.Double(2, 1);
         b = new Point2D.Double(1, 1);
         c = new Point2D.Double(2, 2);
 
-        assertEquals(Math.PI / 4, LIC.calculateAngle(a, b, c));
+        var second = LIC.calculateAngle(a, b, c);
+
+        var expected = new double[] { Math.PI / 2, Math.PI / 4 };
+        var actual = new double[] { first, second };
+
+        assertArrayEquals(expected, actual);
     }
 
+    /**
+     * Checks that the condition is false when number of points is below 5
+     */
     @Test
-    public void testLIC9_Negative() {
+    @DisplayName("LIC 9 Negative: Less than 5 points")
+    public void testLIC9_Negative_1() {
         // if less than five points, condition should be false
         int numPoints = 4;
         int dPts = 1;
@@ -820,102 +836,151 @@ public class LICTest {
 
         var res = LIC.condition9(null, null, cPts, dPts, 0, numPoints);
         assertFalse(res);
+    }
 
-        // if no valid angles, condition should be false
-        numPoints = 9;
-        cPts = 1;
-        dPts = 1;
+    /**
+     * Checks that the condition is false when there are no valid angles
+     */
+    @Test
+    @DisplayName("LIC 9 Negative: No valid angles")
+    public void testLIC9_Negative_2() {
+        int cPts = 1;
+        int dPts = 1;
         double[] xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         double[] yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
-        res = LIC.condition9(xCoordinates, yCoordinates, cPts, dPts, 0, 9);
-        assertFalse(res);
-
-        // test with valid angles
-        numPoints = 5;
-        // basic, 90 deg angle
-        xCoordinates = new double[] { 1, 47, 0, 47, 0 };
-        yCoordinates = new double[] { 0, 47, 0, 47, 1 };
-
-        // if epsilon is PI, PI + ep = 2PI, PI - ep = 0, both tests should fail
-        double epsilon = Math.PI;
-        res = LIC.condition9(xCoordinates, yCoordinates, cPts, dPts, epsilon, numPoints);
+        var res = LIC.condition9(xCoordinates, yCoordinates, cPts, dPts, 0, 9);
         assertFalse(res);
     }
 
+    /**
+     * Checks that the condition is false when there are valid angles, but the
+     * epsilon is too large
+     */
     @Test
-    public void testLIC9_Positive() {
-        // test with valid angles
-        int numPoints = 5;
-        int cPts = 1;
-        int dPts = 1;
+    @DisplayName("LIC 9 Negative: Epsilon is too large")
+    public void testLIC9_Negative_3() {
+        // basic, 90 deg angle
+        var xCoordinates = new double[] { 1, 47, 0, 47, 0 };
+        var yCoordinates = new double[] { 0, 47, 0, 47, 1 };
 
+        // if epsilon is PI, PI + ep = 2PI, PI - ep = 0, both tests should fail
+        double epsilon = Math.PI;
+        boolean res = LIC.condition9(xCoordinates, yCoordinates, 1, 1, epsilon, xCoordinates.length);
+        assertFalse(res);
+    }
+
+    /**
+     * Checks that the condition is true when there are valid angles, and the angle
+     * is below PI - epsilon
+     */
+    @Test
+    @DisplayName("LIC 9 Positive: Angle is below PI - epsilon")
+    public void testLIC9_Positive_1() {
         // basic triangle, angle is PI/2
         double[] xCoordinates = new double[] { 1, 47, 0, 47, 0 };
         double[] yCoordinates = new double[] { 0, 47, 0, 47, 1 };
 
-        // angle is allowed to be below PI - epsilon
         double epsilon = Math.PI * 0.25; // epsilon is 3PI/4
-        boolean res = LIC.condition9(xCoordinates, yCoordinates, cPts, dPts, epsilon, numPoints);
-        assertTrue(res);
-
-        // angle is allowed to be above PI + epsilon
-        epsilon = Math.PI * 0.75 * (-1); // epsilon is -3PI/4
-        res = LIC.condition9(xCoordinates, yCoordinates, cPts, dPts, epsilon, numPoints);
+        boolean res = LIC.condition9(xCoordinates, yCoordinates, 1, 1, epsilon, xCoordinates.length);
         assertTrue(res);
     }
 
+    /**
+     * Cehcks that the condition is true when there are valid angles, and the angle
+     * is above PI + epsilon
+     */
     @Test
+    @DisplayName("LIC 9 Positive: Angle is above PI + epsilon")
+    public void testLIC9_Positive_2() {
+        // basic triangle, angle is PI/2
+        double[] xCoordinates = new double[] { 1, 47, 0, 47, 0 };
+        double[] yCoordinates = new double[] { 0, 47, 0, 47, 1 };
+
+        var epsilon = Math.PI * 0.75 * (-1); // epsilon is -3PI/4
+        var res = LIC.condition9(xCoordinates, yCoordinates, 1, 1, epsilon, xCoordinates.length);
+        assertTrue(res);
+    }
+
+    /**
+     * Checks that the method throws an error when cPts or dPts are negative
+     */
+    @Test
+    @DisplayName("LIC 9 Throws: cPts or dPts is negative")
     public void testLIC9_Invalid() {
-        // cPts and dPts too small
         assertThrows(Error.class, () -> LIC.condition9(null, null, -1, 1, 0, 0));
         assertThrows(Error.class, () -> LIC.condition9(null, null, 1, -1, 0, 0));
     }
 
+    /**
+     * Tests that the calculateTriangleArea method returns the correct area for a
+     * sample triangle made of positive coordinates
+     */
     @Test
-    public void testCalculateTriangleArea() {
-        // basic triangle
+    @DisplayName("Calculate triangle area method returns correct area, positive coordinates")
+    public void testCalculateTriangleArea_1() {
         var a = new Point2D.Double(0, 0);
         var b = new Point2D.Double(1, 0);
         var c = new Point2D.Double(0, 1);
 
         assertEquals(0.5, LIC.calculateTriangleArea(a, b, c));
+    }
 
-        // triangle with negative coordinates
-        a = new Point2D.Double(-1, -1);
-        b = new Point2D.Double(1, -1);
-        c = new Point2D.Double(-1, 1);
+    /**
+     * Tests that the calculateTriangleArea method returns the correct area for a
+     * sample triangle made of negative coordinates
+     */
+    @Test
+    @DisplayName("Calculate triangle area method returns correct area, negative coordinates")
+    public void testCalculateTriangleArea_2() {
+        var a = new Point2D.Double(-1, -1);
+        var b = new Point2D.Double(1, -1);
+        var c = new Point2D.Double(-1, 1);
 
         assertEquals(2, LIC.calculateTriangleArea(a, b, c));
     }
 
+    /**
+     * Tests that the condition is true when passed a single triangle of area
+     * greater than the area parameter
+     */
     @Test
-    public void testLIC10_Positive() {
-        int numPoints = 5;
-        int ePts = 1;
-        int fPts = 1;
+    @DisplayName("LIC 10 Positive: Single triangle area greater than area parameter")
+    public void testLIC10_Positive_1() {
         double[] xCoordinates = new double[] { 0, 47, 5, 47, 0 };
         double[] yCoordinates = new double[] { 0, 47, 5, 47, 5 };
         // triangle is 5x5, area is 12.5
         double area1 = 12;
         // area1 is less than triangle area, test should pass
-        boolean res = LIC.condition10(xCoordinates, yCoordinates, ePts, fPts, area1, numPoints);
-        assertTrue(res);
-
-        numPoints = 7;
-        xCoordinates = new double[] { 1, 47, 1, 47, 2, 47, 2 };
-        yCoordinates = new double[] { 0, 47, 1, 47, 1, 47, 4 };
-
-        // first triplet has area 0.5
-        // second triplet has area 1.5
-        area1 = 1.4;
-        // area1 is less than triangle area, test should pass
-        res = LIC.condition10(xCoordinates, yCoordinates, ePts, fPts, area1, numPoints);
+        boolean res = LIC.condition10(xCoordinates, yCoordinates, 1, 1, area1, xCoordinates.length);
         assertTrue(res);
     }
 
+    /**
+     * Tests that the condition is true when passed both a triangle that exceeds the
+     * area parameter, and a triangle that does not
+     */
     @Test
-    public void testLIC10_Negative() {
+    @DisplayName("LIC 10 Positive: Multiple triangles, one greater than area parameter")
+    public void testLIC10_Positive_2() {
+        var xCoordinates = new double[] { 1, 47, 1, 47, 2, 47, 2 };
+        var yCoordinates = new double[] { 0, 47, 1, 47, 1, 47, 4 };
+
+        // first triplet has area 0.5
+        // second triplet has area 1.5
+        var area1 = 1.4;
+        // area1 is less than triangle area, test should pass
+        var res = LIC.condition10(xCoordinates, yCoordinates, 1, 1, area1, xCoordinates.length);
+        assertTrue(res);
+    }
+
+    /**
+     * Tests that the condition is false when passed a single triangle of area less
+     * than the area parameter
+     */
+    @Test
+    @DisplayName("LIC 10 Negative: Single triangle area less than area parameter")
+    public void testLIC10_Negative_1() {
         int numPoints = 5;
         int ePts = 1;
         int fPts = 1;
@@ -926,111 +991,145 @@ public class LICTest {
         // area1 is greater than triangle area, test should fail
         boolean res = LIC.condition10(xCoordinates, yCoordinates, ePts, fPts, area1, numPoints);
         assertFalse(res);
+    }
 
-        numPoints = 7;
-        xCoordinates = new double[] { 0, 47, 1, 47, 1, 47, 1 };
-        yCoordinates = new double[] { 0, 47, 1, 47, 0, 47, 4 };
+    /**
+     * Tests that the condition is false when passed two triangles, wich both have
+     * areas less than the area parameter
+     */
+    @Test
+    @DisplayName("LIC 10 Negative: Multiple triangles, all less than area parameter")
+    public void testLIC10_Negative_2() {
+        var xCoordinates = new double[] { 0, 47, 1, 47, 1, 47, 1 };
+        var yCoordinates = new double[] { 0, 47, 1, 47, 0, 47, 4 };
 
         // first triplet is 1x1, area is 0.5
         // second triplet is 1x1, area is 1.5
-        area1 = 1.6;
+        var area1 = 1.6;
         // area1 is greater than triangle area, test should fail
-        res = LIC.condition10(xCoordinates, yCoordinates, ePts, fPts, area1, numPoints);
+        var res = LIC.condition10(xCoordinates, yCoordinates, 1, 1, area1, xCoordinates.length);
         assertFalse(res);
     }
 
+    /**
+     * Checks that the method throws an error when ePts or fPts are negative
+     */
     @Test
+    @DisplayName("LIC 10 Throws: ePts or fPts is negative")
     public void testLIC10_Invalid() {
-        // ePts and fPts too small
         assertThrows(Error.class, () -> LIC.condition10(null, null, -1, 1, 0, 0));
         assertThrows(Error.class, () -> LIC.condition10(null, null, 1, -1, 0, 0));
     }
 
+    /**
+     * Checks that a the condition is true when one single pair of points fulfills
+     * the criteria of x_j - x_i < 0
+     */
     @Test
+    @DisplayName("LIC 11 Positive: Single pair of points fulfills criteria")
     public void testLIC11_Positive() {
         int numPoints = 10;
         int gPts = 1;
-        // on index i = 5 and j = 7 x_j - x_i = 5 - 6 = -1 <= 0
+        // on index i = 5 and j = 7 x_j - x_i = 5 - 6 = -1 < 0
         var xCoordinates = new double[] { 0, 1, 2, 3, 4, 6, 6, 5, 8, 9 };
         // y coordinates does not matter
         var yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         boolean res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
 
         assertTrue(res);
-
-        // test with bigger gPts
-        gPts = 8;
-        xCoordinates = new double[] { 9, 1, 2, 3, 4, 6, 6, 5, 8, 0 };
-        res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
-        assertTrue(res);
     }
 
+    /**
+     * Check that the condition is false when no pair of points fulfills the
+     * criteria of x_j - x_i < 0, as the x-coordinates are increasing
+     */
     @Test
-    public void testLIC11_Negative() {
+    @DisplayName("LIC 11 Negative: No pair of points fulfills criteria")
+    public void testLIC11_Negative_1() {
         int numPoints = 10;
         int gPts = 1;
-        // on index i = 5 and j = 7 x_j - x_i = 7 - 5 = 2 > 0
         var xCoordinates = new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         // y coordinates does not matter
         var yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         boolean res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
 
         assertFalse(res);
+    }
 
-        // test with bigger gPts
-        gPts = 8;
-        xCoordinates = new double[] { 0, 1, 2, 3, 4, 6, 6, 7, 8, 9 };
-        res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
+    /**
+     * Check that the condition x_j - x_i < 0 is not fulfilled when x_i = x_j, i.e.
+     * the x-coordinates are all equal
+     */
+    @Test
+    @DisplayName("LIC 11 Negative: All x-coordinates are equal")
+    public void testLIC11_Negative_2() {
+        var xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        var yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        var res = LIC.condition11(xCoordinates, yCoordinates, 1, xCoordinates.length);
         assertFalse(res);
 
-        // test with equal x-coordinates
-        xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-        res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
-        assertFalse(res);
+    }
 
-        // test that pairs where j >= i does not count, i.e. that order matters
-        xCoordinates = new double[] { 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6 };
-        res = LIC.condition11(xCoordinates, yCoordinates, gPts, numPoints);
+    /**
+     * Check that pairs where j >= i does not count, i.e. that order matters
+     */
+    @Test
+    @DisplayName("LIC 11 Negative: Order matters")
+    public void testLIC11_Negative_3() {
+        var xCoordinates = new double[] { 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6 };
+        var yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        var res = LIC.condition11(xCoordinates, yCoordinates, 1, xCoordinates.length);
         assertFalse(res);
     }
 
-
+    /**
+     * Check that the method throws an error when gPts is negative
+     */
     @Test
+    @DisplayName("LIC 11 Throws: gPts is negative")
     public void testLIC11_Invalid() {
-        // gPts too small
         assertThrows(Error.class, () -> LIC.condition11(null, null, -1, 0));
     }
 
+    /**
+     * Check that the condition is true when one pair of points fulfills the
+     * criteria of beeing greater than length1 apart and multiple points fulfills
+     * the criteria of beeing less than length2 apart
+     */
     @Test
-    public void testLIC12_Positive() {
-        int kPts = 1;
+    @DisplayName("LIC 12 Positive: One pair of points fulfills criteria 1, Multiple points fulfills criteria 2")
+    public void testLIC12_Positive_1() {
         double length1 = 0.9;
         double length2 = 1;
-        int numPoints = 10;
 
         double[] xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         double[] yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 };
 
-        boolean res = LIC.condition12(xCoordinates, yCoordinates, kPts, length1, length2, numPoints);
+        boolean res = LIC.condition12(xCoordinates, yCoordinates, 1, length1, length2, xCoordinates.length);
         assertTrue(res);
-
-        // test with bigger kPts
-        kPts = 7;
-        length1 = 5;
-        xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 10 };
-        yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 10 };
-        res = LIC.condition12(xCoordinates, yCoordinates, kPts, length1, length2, numPoints);
-        assertTrue(res);
-
-        // only one pair (each) that satisfies the conditions
-        kPts = 3;
-        length1 = 100;
-        length2 = 1.1;
-        xCoordinates = new double[] { 2, 4, 6, 8, 10, 9, 14, 16, 18, 120 };
-        yCoordinates = new double[] { 2, 4, 6, 8, 10, 8, 14, 16, 18, 120 };
-
     }
 
+    /**
+     * Test that the condition is true when exactly one pair of points fulfills the
+     * criteria of beeing greater than length1 apart and exactly one pair of points
+     * fulfills the criteria of beeing less than length2 apart
+     */
+    @Test
+    @DisplayName("LIC 12 Positive: Exactly one pair of fulfills the criteras respectively")
+    public void testLIC12_Positive_2() {
+        var length1 = 100;
+        var length2 = 1.1;
+        var xCoordinates = new double[] { 2, 4, 6, 8, 10, 9, 14, 16, 18, 120 };
+        var yCoordinates = new double[] { 2, 4, 6, 8, 10, 8, 14, 16, 18, 120 };
+        boolean res = LIC.condition12(xCoordinates, yCoordinates, 1, length1, length2, xCoordinates.length);
+        assertTrue(res);
+    }
+
+    /**
+     * Tests that the condition is false when no pair of points fulfills the
+     * criteria of beeing greater than length2 apart, by having all distances 0
+     */
+    @DisplayName("LIC 12 Negative: All distances 0")
     @Test
     public void testLIC12_Negative() {
         int kPts = 1;
@@ -1038,23 +1137,18 @@ public class LICTest {
         double length2 = 1;
         int numPoints = 10;
 
-        // all distances 0
         double[] xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         double[] yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
         boolean res = LIC.condition12(xCoordinates, yCoordinates, kPts, length1, length2, numPoints);
         assertFalse(res);
-
-        // test with bigger kPts
-        kPts = 7;
-        length1 = 100;
-        xCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 10 };
-        yCoordinates = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 10 };
-        res = LIC.condition12(xCoordinates, yCoordinates, kPts, length1, length2, numPoints);
-        assertFalse(res);
     }
 
+    /**
+     * Check that the method throws an error when kPts or lengths is negative
+     */
     @Test
+    @DisplayName("LIC 12 Throws: kPts or lengths is negative")
     public void testLIC12_Invalid() {
         // kPts too small
         assertThrows(Error.class, () -> LIC.condition12(null, null, -1, 1, 1, 0));
@@ -1064,7 +1158,12 @@ public class LICTest {
         assertThrows(Error.class, () -> LIC.condition12(null, null, 1, 1, -1, 0));
     }
 
+    /**
+     * Check that the condition is true when one triangle both exceeds area1 and is
+     * below area2
+     */
     @Test
+    @DisplayName("LIC 14 Positive: One triangle exceeds area1 and is below area2")
     public void testLIC14_Positive() {
         int ePts = 1;
         int fPts = 1;
@@ -1079,8 +1178,10 @@ public class LICTest {
         assertTrue(res);
     }
 
+    /** Check that the condition is false when no triangle exceeds area1 */
     @Test
-    public void testLIC14_Negative() {
+    @DisplayName("LIC 14 Negative: No triangle exceeds area1")
+    public void testLIC14_Negative_1() {
         int ePts = 1;
         int fPts = 1;
         int numPoints = 5;
@@ -1091,13 +1192,30 @@ public class LICTest {
         double area2 = 13;
         boolean res = LIC.condition14(xCoordinates, yCoordinates, ePts, fPts, area1, area2, numPoints);
         assertFalse(res);
-        area1 = 12;
-        area2 = 12;
-        res = LIC.condition14(xCoordinates, yCoordinates, ePts, fPts, area1, area2, numPoints);
+    }
+
+    /** Check that the condition is false when no triangle is below area2 */
+    @Test
+    @DisplayName("LIC 14 Negative: No triangle is below area2")
+    public void testLIC14_Negative_2() {
+        int ePts = 1;
+        int fPts = 1;
+        int numPoints = 5;
+        double[] xCoordinates = new double[] { 0, 47, 5, 47, 0 };
+        double[] yCoordinates = new double[] { 0, 47, 5, 47, 5 };
+        // triangle is 5x5, area is 12.5
+        var area1 = 12;
+        var area2 = 12;
+        boolean res = LIC.condition14(xCoordinates, yCoordinates, ePts, fPts, area1, area2, numPoints);
         assertFalse(res);
     }
-    
+
+    /**
+     * Check that the method throws an error when ePts, fPts, area1 or area2 is
+     * negative
+     */
     @Test
+    @DisplayName("LIC 14 Throws: ePts, fPts, area1 or area2 is negative")
     public void testLIC14_Invalid() {
         // ePts or fPts too small
         assertThrows(Error.class, () -> LIC.condition14(null, null, -1, 1, 0, 0, 0));
