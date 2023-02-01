@@ -23,9 +23,11 @@ Amanda:
 - LIC 0-3
 
 Erik: 
-- Structure 
-- LIC 4-6
-- FUV class (TODO)
+- Structure (repo structure, class structure, class skeleton structures)
+- LICs 4-6 + Tests
+- FUV class + Tests
+- LaunchInterceptor class + Tests (main tests)
+- Some code reviews
 
 Tobias: 
 - LIC 7-8
