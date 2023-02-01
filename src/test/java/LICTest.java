@@ -11,132 +11,249 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LICTest {
 
+    /**
+     * Asserts true
+     * Should return true since there is a set of two consecutive data points
+     * which has a distance greater than length1
+     */
     @Test
-    @DisplayName("Condition 0")
-    void condition0(){
-        double [] x = {1, 2, 3};
-        double [] y = {1, 2, 1};
+    @DisplayName("LIC 0 Positive 1: one set meeting the criteria")
+    void testLIC0_Positive_1(){
+        double [] x = {-1, 3};
+        double [] y = {-1, -1};
 
-        assertEquals(true, LIC.condition0(x, y, 1));
-
-        //expected false: distance of 2 is not greater than lenght1 = 2
-        assertEquals(false, LIC.condition0(x, y, 2));
-
-        x = new double[]{-1, 3};
-        y = new double[]{-1, -1};
-
-        assertEquals(true, LIC.condition0(x, y, 3));
-        assertEquals(true, LIC.condition0(x, y, 0));
-
-        //expected false: distance of 4 is not greater than lenght1 = 4
-        assertEquals(false, LIC.condition0(x, y, 4));
-
-        //expected false: there is no distance between two consecutive data points to be greater than lenght1
-        assertEquals(false, LIC.condition0(new double[]{}, new double[]{}, 0));
-
-        //expected false: there is no distance between two consecutive data points to be greater than lenght1
-        assertEquals(false, LIC.condition0(new double[]{2}, new double[]{-3}, 0));
-    }
-
-    @Test
-    @DisplayName("Condition 1")
-    void condition1(){
-        //Should give a radius of 0.7071
-        double [] x = {0, 0, 1};
-        double [] y = {0, 1, 0};
-
-        assertEquals(true, LIC.condition1(x, y, 0.5));
-
-        // expected false: There is three consecutive data points
-        // that can all be contained within or on a circle of radius of RADIUS1
-        assertEquals(false, LIC.condition1(x, y, 3));
-
-        //Should give a radius of 5
-        double [] x2 = {-6, -3, 0};
-        double [] y2 = {3, 2, 3};
-        assertEquals(true, LIC.condition1(x2, y2, 3));
-
-        // expected false: There is three consecutive data points
-        // that can all be contained within or on a circle of radius of RADIUS1
-        assertEquals(false, LIC.condition1(x2, y2, 6));
-
-        // all radius are: 1.58, 5 and 1.58
-        double [] x3 = {-3, -6, -3, 0, -3};
-        double [] y3 = {3, 3, 2, 3, 3};
-
-        // one set of three consecutive data points that cannot all be contained within
-        // or on a circle of radius RADIUS1 exists because of (-6,3), (-3,2) and (0,3)
-        assertEquals(true, LIC.condition1(x3, y3, 0));
-        assertEquals(true, LIC.condition1(x3, y3, 1));
-        assertEquals(true, LIC.condition1(x3, y3, 3));
-        assertEquals(true, LIC.condition1(x3, y3, 4.99));
-        assertEquals(true, LIC.condition1(x3, y3, 4.99999));
-
-        // expected false: There is three consecutive data points
-        // that can all be contained within or on a circle of radius of RADIUS1
-        assertEquals(false, LIC.condition1(x3, y3, 5));
-        assertEquals(false, LIC.condition1(x3, y3, 5000000));
-
-        double [] x4 = {-6, -3};
-        double [] y4 = {3, 2};
-        // expected false: There is no three consecutive data points
-        assertEquals(false, LIC.condition1(x4, y4, 10));
-        assertEquals(false, LIC.condition1(x4, y4, 1));
-        assertEquals(false, LIC.condition1(new double[]{-2}, new double[]{3}, 10));
-        assertEquals(false, LIC.condition1(new double[]{}, new double[]{}, 1));
-        assertEquals(false, LIC.condition1(new double[]{-2,-2,-2}, new double[]{3,3,3}, 0));
-        assertEquals(false, LIC.condition1(new double[]{-2,-2,-2}, new double[]{3,3,3}, 1));
-        assertEquals(false, LIC.condition1(new double[]{-8,-7,-6}, new double[]{3,3,3}, 2));
-
-        assertEquals(true, LIC.condition1(new double[]{-8,-7,-6}, new double[]{3,3,3}, 0.5));
-    }
-
-    @Test
-    @DisplayName("Condition 2")
-    void condition2(){
-        // 90 degrees angle
-        double [] x1 = {0, 0, 3};
-        double [] y1 = {9, 0, 0};
-
-        assertEquals(true, LIC.condition2(x1,y1,(2/3)*Math.PI));
-
-        // expected false: 90 degrees is not less than 90 degrees or greater than 270 degrees
-        assertEquals(false, LIC.condition2(x1,y1,Math.PI/2));
-
-        // 180 degrees angle
-        double [] x2 = {-10, 0, 80};
-        double [] y2 = {0, 0, 0};
-
-        // expected false: 180 degrees is not less than or greater than 180 degrees
-        assertEquals(false, LIC.condition2(x2, y2,0));
-        // expected false: 180 degrees is not less than 150 degrees or greater than 210 degrees
-        assertEquals(false, LIC.condition2(x2, y2,Math.PI/6));
-
-        double [] x3 = {-1, 0, -1};
-        double [] y3 = { 0, -4, 0};
-        assertEquals(true, LIC.condition2(x3, y3,(2/3)*Math.PI));
-
-        // expected false: if either the first point or the last point (or both) coincides with the vertex,
-        // the angle is undefined and the LIC is not satisfied by those three points.
-        double [] x4 = {0, 0, -1};
-        double [] y4 = {-4, -4, 0};
-        assertEquals(false, LIC.condition2(x4, y4,Math.PI/3));
-
-        double [] x5 = {6, 0, 0};
-        double [] y5 = {4, -4, -4};
-        assertEquals(false, LIC.condition2(x5, y5,(2/3)*Math.PI));
-
-        double [] x6 = {0, 0, 0};
-        double [] y6 = {4, 4, 4};
-        assertEquals(false, LIC.condition2(x6, y6,Math.PI/3));
+        assertTrue(LIC.condition0(x, y, 3));
     }
 
     /**
-     * Test for invalid data of AREA1 being less than 0
+     * Asserts true
+     * Should return true since there is a set of two consecutive data points
+     * which has a distance greater than length1
      */
     @Test
-    @DisplayName("Condition 3 invalid data")
-    void condition3_invalid_data(){
+    @DisplayName("LIC 0 Positive 2: one set meeting the criteria, one set that does not")
+    void testLIC0_Positive_2(){
+        double [] x = {1, 2, 3};
+        double [] y = {1, 2, 1};
+
+        assertTrue(LIC.condition0(x, y, 1));
+    }
+
+    /**
+     * Asserts false
+     * Should return false since there is not a set of two consecutive data points
+     * that has a distance greater than length1
+     */
+    @Test
+    @DisplayName("LIC 0 Negative 1: no set meeting the criteria")
+    void testLIC0_Negative_1(){
+        double [] x = {1, 2, 2};
+        double [] y = {1, 2, 1};
+
+        assertFalse(LIC.condition0(x, y, 2));
+    }
+
+    /**
+     * Asserts false
+     * Should return false since the distance of the two data points is equal to
+     * (and not greater) than length1
+     */
+    @Test
+    @DisplayName("LIC 0 Negative 2: distance and length1 being equal ")
+    void testLIC0_Negative_2(){
+        double [] x = {-5, -1};
+        double [] y = {-1, -1};
+
+        assertEquals(false, LIC.condition0(x, y, 4));
+    }
+
+    /**
+     * Asserts false
+     * Should return false since there is no distance between two consecutive data points
+     * to be greater than length1
+     */
+    @Test
+    @DisplayName("LIC 0 Negative 3: test with only one data point")
+    void testLIC0_Negative_3(){
+        assertFalse(LIC.condition0(new double[]{2}, new double[]{-3}, 0));
+    }
+
+    /**
+     * Asserts false
+     * Should return false since there is no distance between two consecutive data points
+     * to be greater than length1
+     */
+    @Test
+    @DisplayName("LIC 0 Negative 4: test with only one data points")
+    void testLIC0_Negative_4(){
+        assertFalse(LIC.condition0(new double[]{}, new double[]{}, 0));
+    }
+
+    /**
+     * Asserts throws
+     * Should throw error since length1 is invalid
+     */
+    @Test
+    @DisplayName("LIC 0 invalid: test with invalid length")
+    void testLIC0_Invalid(){
+        Throwable t = assertThrows(Error.class, () -> LIC.condition0(new double[]{}, new double[]{}, -1));
+        assertEquals("Invalid input provided, length1 must be equal to or greater than 0", t.getMessage());
+    }
+
+    /**
+     * Asserts true
+     * Should return true since there exists at least one set data points does not fit in the circle with radius
+     */
+    @Test
+    @DisplayName("LIC 1 Positive 1: the set of data points does not fit in the circle")
+    void testLIC1_Positive_1(){
+        double [] x = {0, 0, 1};
+        double [] y = {0, 1, 0};
+
+        assertTrue(LIC.condition1(x, y, 0.5));
+    }
+
+    /**
+     * Asserts true
+     * Should return true since there exists at least one set data points does not fit in the circle with radius
+     */
+    @Test
+    @DisplayName("LIC 1 Positive 2: one set (out of three) does not fit in the circle")
+    void testLIC1_Positive_2(){
+        // all radius are: 1.58, 5 and 1.58
+        double [] x = {-3, -6, -3, 0, -3};
+        double [] y = {3, 3, 2, 3, 3};
+
+        // or on a circle of radius RADIUS1 exists because of (-6,3), (-3,2) and (0,3)
+        assertEquals(true, LIC.condition1(x, y, 4.99999));
+    }
+    /**
+     * Asserts true
+     * Should return true since the only existing set which are collinear does not fit
+     * in the circle of radius RADIUS1
+     */
+    @Test
+    @DisplayName("LIC 1 Positive 3: one collinear set")
+    void testLIC1_Positive_3(){
+        assertTrue(LIC.condition1(new double[]{-8, -7, -6}, new double[]{3, 3, 3}, 0.5));
+    }
+
+    /**
+     * Asserts false
+     * Should return false since there exists a set of three data points that
+     * can all be contained within or on a circle of radius of RADIUS1
+     */
+    @Test
+    @DisplayName("LIC 1 Negative 1: no set of data points that does not fit in the circle")
+    void testLIC1_Negative_1(){
+        double [] x = {0, 0, 1};
+        double [] y = {0, 1, 0};
+
+        assertFalse(LIC.condition1(x, y, 3));
+    }
+    /**
+     * Asserts false
+     * Should return false since there exists no set of three data points that
+     * can not all be contained within or on a circle of radius of RADIUS1
+     */
+    @Test
+    @DisplayName("LIC 1 Negative 2: no set of data points")
+    void testLIC1_Negative_2(){
+        assertFalse(LIC.condition1(new double[]{}, new double[]{}, 1));
+    }
+    /**
+     * Asserts false
+     * Should return false since the set which is a point fits in the circle
+     * of radius RADIUS1
+     */
+    @Test
+    @DisplayName("LIC 1 Negative 3: one set with same position")
+    void testLIC1_Negative_3(){
+        assertFalse(LIC.condition1(new double[]{-2,-2,-2}, new double[]{3,3,3}, 1));
+    }
+
+    /**
+     * Asserts throw
+     * Should throw error because of invalid RADIUS1 (less than 0)
+     */
+    @Test
+    @DisplayName("LIC 1 Invalid 1: test with  invalid radius1")
+    void testLIC1_Invalid(){
+        Throwable t = assertThrows(Error.class, () -> LIC.condition1(new double[]{}, new double[]{}, -1));
+        assertEquals("Invalid input provided, radius1 must be equal to or greater than 0", t.getMessage());
+
+    }
+
+    /**
+     * Asserts throw
+     * Should throw error because of invalid epsilon value
+     */
+    @Test
+    @DisplayName("LIC 2 Invalid: test with  invalid radius1")
+    void testLIC2_Invalid(){
+        Throwable t = assertThrows(Error.class, () -> LIC.condition2(new double[]{}, new double[]{}, -1));
+        assertEquals("Invalid input provided, epsilon must be equal to or greater than 0, but less than Pi", t.getMessage());
+
+    }
+    /**
+     * Asserts true
+     * Should return true since 90 < 180 - 60 (angle < Math.PI - epsilon) is true
+     */
+    @Test
+    @DisplayName("LIC 2 Positive 1: meets condition")
+    void testLIC2_Positive_1(){
+        // 90 degrees angle
+        double [] x = {0, 0, 3};
+        double [] y = {9, 0, 0};
+
+        assertTrue(LIC.condition2(x, y, Math.PI / 3));
+    }
+    /**
+     * Asserts false
+     * Should return true since 90 < 90 (angle < Math.PI - epsilon) is false and
+     * 90 > 270 (angle > Math.PI + epsilon) is false
+     */
+    @Test
+    @DisplayName("LIC 2 Negative 1: does not meet condition")
+    void testLIC2_Negative_1(){
+        // 90 degrees angle
+        double [] x = {0, 0, 3};
+        double [] y = {9, 0, 0};
+
+        assertTrue(LIC.condition2(x, y, Math.PI / 3));
+    }
+    /**
+     * Asserts false
+     * Should return true since if either the first point or the last point (or both) coincides with the vertex,
+     * the angle is undefined and the LIC is not satisfied by those three points.
+     */
+    @Test
+    @DisplayName("LIC 2 Negative 2: one coincides with the vertex")
+    void testLIC2_Negative_2(){
+        double [] x4 = {0, 0, -1};
+        double [] y4 = {-4, -4, 0};
+        assertFalse(LIC.condition2(x4, y4, Math.PI / 3));
+    }
+    /**
+     * Asserts false
+     * Should return true since if either the first point or the last point (or both) coincides with the vertex,
+     * the angle is undefined and the LIC is not satisfied by those three points.
+     */
+    @Test
+    @DisplayName("LIC 2 Negative 3: both coincides with the vertex")
+    void testLIC2_Negative_3(){
+        double [] x6 = {0, 0, 0};
+        double [] y6 = {4, 4, 4};
+        assertFalse(LIC.condition2(x6, y6, Math.PI / 3));
+    }
+
+    /**
+     * Asserts throw
+     * Should throw error because of invalid data of AREA1 being less than 0
+     */
+    @Test
+    @DisplayName("LIC 3 Invalid: invalid area1 value")
+    void testLIC3_Invalid(){
 
         double [] x = {-2, 0, 2};
         double [] y = {4, 8, 4};
@@ -146,30 +263,33 @@ public class LICTest {
     }
 
     /**
-     * Test for condition 3 with an isosceles triangle where the area is 8
-     * and AREA1 being 7.99, which should give a positive result
+     * Asserts true
+     * Should return true since there exists one set, an isosceles triangle,
+     * with an area of 8 that will not fit in a circle of area AREA1 (7.99)
      */
     @Test
-    @DisplayName("Condition 3 positive isosceles triangle")
-    void condition3_positive_isosceles_triangle(){
+    @DisplayName("LIC 3 positive 1: isosceles triangle")
+    void testLIC3_Positive_1(){
         // triangle with area being 8
         double [] x = {-2, 0, 2};
         double [] y = {4, 8, 4};
 
-        assertEquals(true, LIC.condition3(x, y, 7.99));
+        assertTrue(LIC.condition3(x, y, 7.99));
     }
+
      /**
-      * Test for condition 3 with an isosceles triangle where the area is 8
-      * and AREA1 being 8, which should give a negative result
+      * Asserts false
+      * Should return false since there does not exist one set,that will not fit in a circle of area AREA1
+      * the isosceles triangle with area 8 fits in a circle area of 8
      */
     @Test
-    @DisplayName("Condition 3 negative isosceles triangle")
-    void condition3_negative_isosceles_triangle(){
+    @DisplayName("LIC 3 positive 1: negative isosceles triangle")
+    void testLIC3_Negative_1(){
         // triangle with area being 8
         double [] x = {-2, 0, 2};
         double [] y = {4, 8, 4};
 
-        assertEquals(false, LIC.condition3(x, y, 8));
+        assertFalse(LIC.condition3(x, y, 8));
     }
 
     /**
