@@ -27,6 +27,9 @@ public class LIC {
      * @return if condition 0 is true or not
      */
     public static boolean condition0(double[] xCoords, double[] yCoords, double length1) {
+        if( length1 < 0){
+            throw new Error("Invalid input provided, length1 must be equal to or greater than 0");
+        }
 
         for(int i = 0 ; i < xCoords.length -1; i++){
             double distance = calcDistance(xCoords[i],yCoords[i],xCoords[i+1],yCoords[i+1]);
@@ -63,6 +66,9 @@ public class LIC {
      * @return if condition 1 is true or not
      */
     public static boolean condition1(double[] xCoords, double[] yCoords, double radius1) {
+        if( radius1 < 0){
+            throw new Error("Invalid input provided, radius1 must be equal to or greater than 0");
+        }
         for(int i = 0 ; i < xCoords.length -2; i++){
             //check if it's a Collinear (they build a straight line)
             if(isCollinear(xCoords[i], yCoords[i], xCoords[i+1], yCoords[i+1], xCoords[i+2], yCoords[i+2])){
@@ -197,6 +203,9 @@ public class LIC {
      * @return if condition 2 is met.
      */
     public static boolean condition2(double[] xCoords, double[] yCoords, double epsilon) {
+        if(epsilon < 0 || epsilon >= Math.PI){
+            throw new Error("Invalid input provided, epsilon must be equal to or greater than 0, but less than Pi");
+        }
         for(int i = 0 ; i < xCoords.length -2; i++) {
             if((xCoords[i] == xCoords[i+1] && yCoords[i] == yCoords[i+1])
             || (xCoords[i+2] == xCoords[i+1] && yCoords[i+2] == yCoords[i+1]) ){
@@ -217,7 +226,7 @@ public class LIC {
                 angle += (2*Math.PI);
             }
 
-            if(angle < Math.PI - epsilon || angle > Math.PI + epsilon){
+            if(angle < (Math.PI - epsilon) || angle > (Math.PI + epsilon)){
                 return true;
             }
 
