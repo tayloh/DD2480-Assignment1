@@ -11,6 +11,10 @@ public class LaunchInterceptor {
      */
     public static boolean DECIDE(InputData data) {
 
+        if (data.numPoints < 2 || data.numPoints > 100) {
+            throw new IllegalArgumentException("numPoints must be between 2 and 100");
+        }
+
         // Note that none of these are implemented.
         CMV cmv = new CMV(data);
         PUM pum = new PUM(data.LCM, cmv);
@@ -19,8 +23,10 @@ public class LaunchInterceptor {
         // If any condition in the final unlocking vector
         // is false, we don't launch.
         for (int i = 0; i < fuv.getLength(); i++) {
-            if (!fuv.get(i)) return false;
-            System.out.println("NO");
+            if (!fuv.get(i)) {
+                System.out.println("NO");
+                return false;
+            }
         }
         System.out.println("YES");
         return true;
