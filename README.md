@@ -20,7 +20,8 @@ IntelliJ (community version) can be found here: https://community.chocolatey.org
 ## Contributions
 
 Amanda: 
-- LIC 0-3
+- LIC 0-3 + Tests
+- LIC 13 + Tests
 
 Erik: 
 - Structure (repo structure, class structure, class skeleton structures)
