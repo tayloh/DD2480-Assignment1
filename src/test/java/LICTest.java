@@ -257,7 +257,7 @@ public class LICTest {
         double [] x = {-2, 0, 2};
         double [] y = {4, 8, 4};
 
-        Throwable t = assertThrows( IllegalArgumentException.class, ()-> LIC.contidion3(x, y, -3) );
+        Throwable t = assertThrows( IllegalArgumentException.class, ()-> LIC.condition3(x, y, -3) );
         assertEquals("area1 has to be equal to or greater than 0", t.getMessage());
     }
 
@@ -272,7 +272,7 @@ public class LICTest {
         double [] x = {-2, 0, 2};
         double [] y = {4, 8, 4};
 
-        assertTrue(LIC.contidion3(x, y, 7.99));
+        assertTrue(LIC.condition3(x, y, 7.99));
     }
 
      /**
@@ -286,7 +286,7 @@ public class LICTest {
         double [] x = {-2, 0, 2};
         double [] y = {4, 8, 4};
 
-        assertFalse(LIC.contidion3(x, y, 8));
+        assertFalse(LIC.condition3(x, y, 8));
     }
 
     /**
@@ -303,6 +303,28 @@ public class LICTest {
         double[] yCoords = new double[]{0.1, 0, -1,  0, -1, -0.5};
         int qPts = 5;
         int quads = 3;
+        int numPoints = xCoords.length;
+        boolean result = LIC.condition4(xCoords, yCoords, qPts, quads, numPoints);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Asserts true
+     * Should return true since the points are
+     * distributed among three distinct quadrants
+     * and we check for > 2.
+     *
+     * Only detects true if it checks all points
+     * (added as part of bugfix; it did not check the last point)
+     */
+    @Test
+    public void testLIC4_Positive_2() {
+        // Quadrant nrs: 1, 1, 3, 1, 2
+        double[] xCoords = new double[]{0, 0,  0, 1, -1};
+        double[] yCoords = new double[]{0, 0, -1, 0,  0};
+        int qPts = 5;
+        int quads = 2;
         int numPoints = xCoords.length;
         boolean result = LIC.condition4(xCoords, yCoords, qPts, quads, numPoints);
 
