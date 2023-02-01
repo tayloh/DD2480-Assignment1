@@ -31,8 +31,9 @@ Erik:
 - Some code reviews
 
 Tobias: 
-- LIC 7-8
-- CMV (TODO)
+- LIC 7-8 + tests
+- CMV + tests
+- Some code reviews
 
 Hannes: 
 - LIC 9-10 
