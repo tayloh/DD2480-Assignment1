@@ -28,7 +28,7 @@ public class PUM {
         for (int i = 0; i < lcm.length; i++)
             for (int j = 0; j < lcm[0].length; j++) {
                 if (lcm[i][j].equals("ANDD")) {
-                    System.out.println("" + cmv.get(i) + " AND " + cmv.get(j) + "==" + (cmv.get(i) && cmv.get(j)));
+                    //System.out.println("" + cmv.get(i) + " AND " + cmv.get(j) + "==" + (cmv.get(i) && cmv.get(j)));
                     this.pum[i][j] = (cmv.get(i) && cmv.get(j));
                 } else if (lcm[i][j].equals("ORR")) {
                     this.pum[i][j] = (cmv.get(i) || cmv.get(j));
